@@ -4,9 +4,12 @@
 class CubeFrame : public Mesh
 {
 public:
-	CubeFrame();
+	CubeFrame(GLenum drawMode, QVector3D color, float edgeLength);
 	~CubeFrame();
 
 	void generateVertices() override;
+	void setEdgeLength(float edgeLength);
 private:
+	float m_edgeLength;
+	QVector3D m_color;
 };

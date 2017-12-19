@@ -8,7 +8,7 @@ class Mesh
 public:
 	Mesh();
 	//Mesh(const QVector<Vertex> &vertices, const QVector<int> &indices, const QVector<Vertex> &normals);
-	Mesh(const std::vector<Vertex> &vertices, GLenum drawMode);
+	Mesh(const QVector<Vertex> &vertices, GLenum drawMode);
 	explicit Mesh(GLenum drawMode);
 	//Mesh(const Mesh &);
 	virtual ~Mesh() = 0;
@@ -20,14 +20,14 @@ public:
 	//void updateBufferData(int offset, const Vertex *vertex);
 	GLenum getDrawMode() const;
 	//int getVerticesCount() const;
-	const std::vector<Vertex>& getVertices() const;
+	const QVector<Vertex>& getVertices() const;
 
 	//const QVector<int>& getIndices() const;
 	//const QVector<Vertex>& getNormals() const;
 	//void draw();
 
 protected:
-	std::vector<Vertex> m_vertices;
+	QVector<Vertex> m_vertices;
 	GLenum m_drawMode;
 
 private:

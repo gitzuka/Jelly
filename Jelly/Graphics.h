@@ -4,22 +4,23 @@
 #include <QOpenGLShaderProgram>
 #include "Vertex.h"
 #include "Mesh.h"
+#include <memory>
 
 class Graphics
 {
 public:
-	Graphics(const QVector<Mesh> &meshes);
+	Graphics(const QVector<std::shared_ptr<Mesh>> &meshes);
 	Graphics();
 	~Graphics();
 
 	void initBuffer(QOpenGLShaderProgram *program);
 	void updateVertexBufferData(int offset, const Vertex *vertex, int bufferIndex);
-	void addMesh(const Mesh &mesh);
+	void addMesh(const std::shared_ptr<Mesh> mesh);
 	QOpenGLVertexArrayObject* getVao();
-	const std::vector<Mesh>& Graphics::getMeshes() const;
+	const QVector<std::shared_ptr<Mesh>>& Graphics::getMeshes() const;
 
 private:
-	std::vector<Mesh> m_meshes;
+	QVector<std::shared_ptr<Mesh>> m_meshes;
 	std::vector<QOpenGLBuffer> m_vertexBuffers;
 	QOpenGLVertexArrayObject m_vao;
 };

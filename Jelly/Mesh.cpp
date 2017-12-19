@@ -1,10 +1,14 @@
 #include "Mesh.h"
 
+Mesh::Mesh()
+{
+}
+
 Mesh::Mesh(GLenum drawMode) : m_drawMode(drawMode)
 {
 }
 
-Mesh::Mesh(const std::vector<Vertex>& vertices, GLenum drawMode) : m_vertices(vertices), m_drawMode(drawMode)
+Mesh::Mesh(const QVector<Vertex>& vertices, GLenum drawMode) : m_vertices(vertices), m_drawMode(drawMode)
 {
 }
 
@@ -22,7 +26,7 @@ GLenum Mesh::getDrawMode() const
 	return m_drawMode;
 }
 
-const std::vector<Vertex>& Mesh::getVertices() const
+const QVector<Vertex>& Mesh::getVertices() const
 {
 	return m_vertices;
 }

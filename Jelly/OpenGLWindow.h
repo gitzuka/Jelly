@@ -1,6 +1,6 @@
 #pragma once
-#ifndef GLANIMATIONWINDOW_H
-#define GLANIMATIONWINDOW_H
+#ifndef OPENGLWINDOW_H
+#define OPENGLWINDOW_H
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_4_5_Core>
@@ -26,26 +26,26 @@ protected:
 	//void keyPressEvent(QKeyEvent  *event);
 
 private:
-//	QOpenGLShaderProgram *m_program, *m_axisProgam;
-//	int m_frameCount;
-//	QTime m_frameTime;
-//	Renderer m_renderer;
-//
-//	QVector<Vertex> createCube();
-//	QVector<Vertex> createAxeX();
-//	QVector<Vertex> createAxeY();
-//	QVector<Vertex> createAxeZ();
-//	//void calculateNormals(const QVector<Vertex> &vertices, const QVector<int> &indices);
-//	public slots:
-//	void rotateCube(QQuaternion q);
-//
-//signals:
-//	//void mousePressed(QMouseEvent *event);
-//	//void mouseMoved(QMouseEvent *event);
-//	//void keyPressed(QKeyEvent *event);
-//	void paintedGL();
-//	void initializedGL(QOpenGLShaderProgram*);
-//	void fpsUpdated(float);
+	//	QOpenGLShaderProgram *m_program, *m_axisProgam;
+	//	int m_frameCount;
+	//	QTime m_frameTime;
+	//	Renderer m_renderer;
+	//
+	//	QVector<Vertex> createCube();
+	//	QVector<Vertex> createAxeX();
+	//	QVector<Vertex> createAxeY();
+	//	QVector<Vertex> createAxeZ();
+	//	//void calculateNormals(const QVector<Vertex> &vertices, const QVector<int> &indices);
+	//	public slots:
+	//	void rotateCube(QQuaternion q);
+	//
+	//signals:
+	//	//void mousePressed(QMouseEvent *event);
+	//	//void mouseMoved(QMouseEvent *event);
+	//	//void keyPressed(QKeyEvent *event);
+	//	void paintedGL();
+	//	void initializedGL(QOpenGLShaderProgram*);
+	//	void fpsUpdated(float);
 };
 
 #endif //GLANIMATIONWINDOW_H

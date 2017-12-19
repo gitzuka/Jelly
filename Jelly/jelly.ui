@@ -18,6 +18,9 @@
     <item>
      <widget class="OpenGLWindow" name="openGLWidget"/>
     </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout"/>
+    </item>
    </layout>
   </widget>
  </widget>

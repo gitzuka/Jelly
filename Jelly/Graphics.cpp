@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-Graphics::Graphics(const QVector<Mesh> &meshes) : m_meshes(meshes)
+Graphics::Graphics(const QVector<std::shared_ptr<Mesh>> &meshes) : m_meshes(meshes)
 {
 }
 
@@ -33,7 +33,7 @@ void Graphics::initBuffer(QOpenGLShaderProgram *program)
 		m_vertexBuffers.at(i).create();
 		m_vertexBuffers.at(i).create();
 		m_vertexBuffers.at(i).setUsagePattern(QOpenGLBuffer::StaticDraw);
-		m_vertexBuffers.at(i).allocate(m_meshes.at(i).getVertices().constData(), m_meshes.at(i).getVertices().count() * sizeof(Vertex));
+		m_vertexBuffers.at(i).allocate(m_meshes.at(i)->getVertices().constData(), m_meshes.at(i)->getVertices().count() * sizeof(Vertex));
 
 		if (!m_vao.isCreated())
 		{
@@ -62,7 +62,7 @@ void Graphics::updateVertexBufferData(int offset, const Vertex *vertex, int buff
 	m_vertexBuffers.at(bufferIndex).release();
 }
 
-void Graphics::addMesh(const Mesh &mesh)
+void Graphics::addMesh(const std::shared_ptr<Mesh> mesh)
 {
 	m_meshes.append(mesh);
 }
@@ -72,7 +72,7 @@ QOpenGLVertexArrayObject *Graphics::getVao()
 	return &m_vao;
 }
 
-const QVector<Mesh>& Graphics::getMeshes() const
+const QVector<std::shared_ptr<Mesh>>& Graphics::getMeshes() const
 {
 	return m_meshes;
 }
