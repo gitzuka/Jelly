@@ -9,6 +9,7 @@ public:
 	~JellyCube();
 
 	void generateVertices() override;
+	void generateIndices() override;
 	void generateSprings();
 	void setEdgeLength(float edgeLength);
 private:

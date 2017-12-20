@@ -31,6 +31,16 @@ const QVector<Vertex>& Mesh::getVertices() const
 	return m_vertices;
 }
 
+const QVector<GLushort>& Mesh::getIndices() const
+{
+	return m_indices;
+}
+
+const QMatrix4x4& Mesh::getModelMatrix() const
+{
+	return m_modelMatrix;
+}
+
 //const QVector<int>& Mesh::getIndices() const
 //{
 //	return m_indices;

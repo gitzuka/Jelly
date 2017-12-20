@@ -2,6 +2,7 @@
 #include "Vertex.h"
 #include <qvector.h>
 #include <qopengl.h>
+#include <QMatrix4x4>
 
 class Mesh
 {
@@ -12,7 +13,9 @@ public:
 	explicit Mesh(GLenum drawMode);
 	//Mesh(const Mesh &);
 	virtual ~Mesh() = 0;
+
 	virtual void generateVertices() = 0;
+	virtual void generateIndices() = 0;
 	//Mesh &Mesh::operator=(const Mesh&);
 
 	//void createVertices(const QVector<Vertex> &vertices);
@@ -21,13 +24,16 @@ public:
 	GLenum getDrawMode() const;
 	//int getVerticesCount() const;
 	const QVector<Vertex>& getVertices() const;
-
+	const QVector<GLushort>& getIndices() const;
+	const QMatrix4x4& getModelMatrix() const;
 	//const QVector<int>& getIndices() const;
 	//const QVector<Vertex>& getNormals() const;
 	//void draw();
 
 protected:
 	QVector<Vertex> m_vertices;
+	QVector<GLushort> m_indices;
+	QMatrix4x4 m_modelMatrix;
 	GLenum m_drawMode;
 
 private:

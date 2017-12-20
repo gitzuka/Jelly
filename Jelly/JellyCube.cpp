@@ -39,9 +39,15 @@ void JellyCube::generateVertices()
 
 }
 
+void JellyCube::generateIndices()
+{
+}
+
 void JellyCube::generateSprings()
 {
 	int verticesNum = 64;
+	m_indices.reserve(360);
+
 	for (int z = 0; z < 4; ++z) //create springs along x axis
 	{
 		for (int y = 0; y < 4; ++y)
@@ -50,12 +56,18 @@ void JellyCube::generateSprings()
 			{
 				int index = 16 * z + 4 * y + x;
 				m_springs.push_back(Spring(m_vertices.at(index), m_vertices.at(index + 1)));
+				m_indices.push_back(index);
+				m_indices.push_back(index + 1);
 				if (y == 3)
 				{
 					continue;
 				}
 				m_springs.push_back(Spring(m_vertices.at(index), m_vertices.at(index + 5)));
 				m_springs.push_back(Spring(m_vertices.at(index + 1), m_vertices.at(index + 4)));
+				m_indices.push_back(index);
+				m_indices.push_back(index + 5);
+				m_indices.push_back(index + 1);
+				m_indices.push_back(index + 4);
 			}
 		}
 	}
@@ -67,12 +79,19 @@ void JellyCube::generateSprings()
 			{
 				int index = 16 * z + x + 4 * y;
 				m_springs.push_back(Spring(m_vertices.at(index), m_vertices.at(index + 4)));
+				m_indices.push_back(index);
+				m_indices.push_back(index + 4);
 				if (z == 3)
 				{
 					continue;
 				}
 				m_springs.push_back(Spring(m_vertices.at(index), m_vertices.at(index + 20)));
 				m_springs.push_back(Spring(m_vertices.at(index + 4), m_vertices.at(index + 16)));
+				m_indices.push_back(index);
+				m_indices.push_back(index + 20);
+				m_indices.push_back(index + 4);
+				m_indices.push_back(index + 16);
+
 			}
 		}
 	}
@@ -84,12 +103,18 @@ void JellyCube::generateSprings()
 			{
 				int index = 16 * z + 4 * y + x;
 				m_springs.push_back(Spring(m_vertices.at(index), m_vertices.at(index + 16)));
+				m_indices.push_back(index);
+				m_indices.push_back(index + 16);
 				if (x == 3)
 				{
 					continue;
 				}
 				m_springs.push_back(Spring(m_vertices.at(index), m_vertices.at(index + 17)));
 				m_springs.push_back(Spring(m_vertices.at(index + 1), m_vertices.at(index + 16)));
+				m_indices.push_back(index);
+				m_indices.push_back(index + 17);
+				m_indices.push_back(index + 1);
+				m_indices.push_back(index + 16);
 			}
 		}
 	}
