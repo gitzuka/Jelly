@@ -41,6 +41,11 @@ const QMatrix4x4& Mesh::getModelMatrix() const
 	return m_modelMatrix;
 }
 
+void Mesh::setModelMatrix(const QMatrix4x4& mat)
+{
+	m_modelMatrix = mat;
+}
+
 //const QVector<int>& Mesh::getIndices() const
 //{
 //	return m_indices;

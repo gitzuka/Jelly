@@ -9,15 +9,16 @@
 class Graphics
 {
 public:
-	//Graphics(const QVector<std::shared_ptr<Mesh>> &meshes);
 	explicit Graphics(QOpenGLShaderProgram *program);
 	~Graphics();
+
+	//Graphics(const Graphics&);
+	//Graphics &Graphics::operator=(const Graphics&);
 
 	void initBuffer();
 	void updateVertexBufferData(int offset, const Vertex *vertex, int bufferIndex);
 	void addMesh(const std::shared_ptr<Mesh> mesh);
 	void assignShaderProgram(QOpenGLShaderProgram *program);
-	QOpenGLVertexArrayObject* getVao();
 	const QVector<std::shared_ptr<Mesh>>& Graphics::getMeshes() const;
 	void draw(const QMatrix4x4 &projView);
 

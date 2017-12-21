@@ -27,8 +27,8 @@ void OpenGLWindow::initializeGL()
 	program->link();
 
 	std::shared_ptr<Graphics> lineGraphics = std::make_shared<Graphics>(program);
-	lineGraphics->addMesh(std::make_shared<CubeFrame>(GL_LINES, QVector3D(1.0f, 0, 0), 1.0f));
 	lineGraphics->addMesh(std::make_shared<JellyCube>(GL_LINES, QVector3D(0, 1.0f, 1.0f), 1.0f));
+	lineGraphics->addMesh(std::make_shared<CubeFrame>(GL_LINES, QVector3D(1.0f, 0, 0), 1.0f));
 
 	m_renderer.addGraphicComponent(lineGraphics);
 	m_renderer.initBuffers();
