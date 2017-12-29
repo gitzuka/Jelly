@@ -38,5 +38,6 @@ public:
 	static QMatrix4x4 createRotationZ(float angle);
 	static QMatrix4x4 createIdentity();
 	static QVector4D multiplyByMatrix(const QMatrix4x4 &mat, const QVector4D &vec);
+	static QVector3D convertToScreenSpace(float mouseX, float mouseY, float mouseZ, float width, float heigth, const QMatrix4x4 &view, float pitch, float yaw);
 	static float convertToRadians(float angle);
 };

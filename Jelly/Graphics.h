@@ -6,18 +6,24 @@
 #include "Mesh.h"
 #include <memory>
 
-class Graphics
+class JellyPoint;
+class Graphics : public QObject
 {
+	Q_OBJECT
 public:
 	explicit Graphics(QOpenGLShaderProgram *program);
-	~Graphics();
+	virtual ~Graphics();
 
 	//Graphics(const Graphics&);
 	//Graphics &Graphics::operator=(const Graphics&);
 
-	void initBuffer();
-	void updateVertexBufferData(int offset, const Vertex *vertex, int bufferIndex);
-	void addMesh(const std::shared_ptr<Mesh> mesh);
+	void initBuffers();
+	void initBuffer(QOpenGLBuffer *vertBuffer, QOpenGLBuffer *indexBuffer, QOpenGLBuffer::UsagePattern bufferUsage, std::shared_ptr<Mesh> mesh);
+	void initBuffer(int bufferIndex, QOpenGLBuffer::UsagePattern bufferUsage);
+	void updateVertexBufferData(int offset, const Vertex *vertex, int bufferIndex, int count);
+	void updateVertexBufferData(int offset, const Vertex *vertex, int count, QOpenGLBuffer *buffer);
+	void updateVertexBufferData(int offset, const QVector<Vertex> &vertices, int bufferIndex);
+	void addMesh(const std::shared_ptr<Mesh> mesh, QOpenGLBuffer::UsagePattern bufferUsage);
 	void assignShaderProgram(QOpenGLShaderProgram *program);
 	const QVector<std::shared_ptr<Mesh>>& Graphics::getMeshes() const;
 	void draw(const QMatrix4x4 &projView);
@@ -28,4 +34,7 @@ private:
 	std::vector<QOpenGLBuffer> m_ibos;
 	QOpenGLVertexArrayObject m_vao;
 	QOpenGLShaderProgram *m_program;
+
+public slots:
+	void updateJellyData(int jellyIndex, const std::vector<JellyPoint>& positions);
 };

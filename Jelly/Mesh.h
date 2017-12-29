@@ -7,9 +7,9 @@
 class Mesh
 {
 public:
-	Mesh();
-	Mesh(const QVector<Vertex> &vertices, GLenum drawMode);
-	explicit Mesh(GLenum drawMode);
+	explicit Mesh(int index);
+	Mesh(const QVector<Vertex> &vertices, GLenum drawMode, int index);
+	Mesh(GLenum drawMode, int index);
 	virtual ~Mesh() = 0;
 
 	virtual void generateVertices() = 0;
@@ -20,6 +20,7 @@ public:
 	const QVector<GLushort>& getIndices() const;
 	const QMatrix4x4& getModelMatrix() const;
 	void setModelMatrix(const QMatrix4x4 &mat);
+	int getIndex() const;
 
 protected:
 	QVector<Vertex> m_vertices;
@@ -28,6 +29,7 @@ protected:
 	GLenum m_drawMode;
 
 private:
+	const int m_index;
 	//QVector<int> m_indices;
 	//QVector<Vertex> m_normals;
 	//QOpenGLBuffer m_vertexBuffer;

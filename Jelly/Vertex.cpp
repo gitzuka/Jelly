@@ -28,17 +28,17 @@ const QVector3D & Vertex::getNormal() const
 	return m_normal;
 }
 
-void Vertex::setPosition(QVector3D &position)
+void Vertex::setPosition(const QVector3D &position)
 {
 	m_position = position;
 }
 
-void Vertex::setColor(QVector3D &color)
+void Vertex::setColor(const QVector3D &color)
 {
 	m_color = color;
 }
 
-void Vertex::setNormal(QVector3D &normal)
+void Vertex::setNormal(const QVector3D &normal)
 {
 	m_normal = normal;
 }

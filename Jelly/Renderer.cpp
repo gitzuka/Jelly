@@ -42,17 +42,21 @@ Renderer::~Renderer()
 
 void Renderer::initBuffers()
 {
-	for (QVector<std::shared_ptr<Graphics>>::iterator it = m_graphics.begin(); it != m_graphics.end(); ++it)
+	/*for (QVector<std::shared_ptr<Graphics>>::iterator it = m_graphics.begin(); it != m_graphics.end(); ++it)
 	{
 		(*it)->initBuffer();
-	}
+	}*/
 }
 
-void Renderer::addGraphicComponent(const std::shared_ptr<Graphics> graphics)
+void Renderer::addGraphicComponent(std::shared_ptr<Graphics> graphics)
 {
 	m_graphics.append(graphics);
 }
 
+std::shared_ptr<Graphics> Renderer::getGraphics(int index)
+{
+	return m_graphics.at(index);
+}
 
 void Renderer::draw()
 {

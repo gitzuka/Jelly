@@ -1,14 +1,14 @@
 #include "Mesh.h"
 
-Mesh::Mesh()
+Mesh::Mesh(int index) : m_index(index)
 {
 }
 
-Mesh::Mesh(GLenum drawMode) : m_drawMode(drawMode)
+Mesh::Mesh(GLenum drawMode, int index) : m_drawMode(drawMode), m_index(index)
 {
 }
 
-Mesh::Mesh(const QVector<Vertex>& vertices, GLenum drawMode) : m_vertices(vertices), m_drawMode(drawMode)
+Mesh::Mesh(const QVector<Vertex>& vertices, GLenum drawMode, int index) : m_vertices(vertices), m_drawMode(drawMode), m_index(index)
 {
 }
 
@@ -44,6 +44,11 @@ const QMatrix4x4& Mesh::getModelMatrix() const
 void Mesh::setModelMatrix(const QMatrix4x4& mat)
 {
 	m_modelMatrix = mat;
+}
+
+int Mesh::getIndex() const
+{
+	return m_index;
 }
 
 //const QVector<int>& Mesh::getIndices() const

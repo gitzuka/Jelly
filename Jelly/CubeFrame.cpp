@@ -1,7 +1,7 @@
 #include "CubeFrame.h"
 
-CubeFrame::CubeFrame(GLenum drawMode, QVector3D color = QVector3D(1.0f, 0, 0), float edgeLength = 0.1f)
-	: Mesh(drawMode), m_edgeLength(edgeLength), m_color(color)
+CubeFrame::CubeFrame(GLenum drawMode, int index, QVector3D color = QVector3D(1.0f, 0, 0), float edgeLength = 0.1f)
+	: Mesh(drawMode, index), m_edgeLength(edgeLength), m_color(color)
 {
 	CubeFrame::generateVertices();
 	CubeFrame::generateIndices();

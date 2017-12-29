@@ -4,7 +4,7 @@
 class CubeFrame : public Mesh
 {
 public:
-	CubeFrame(GLenum drawMode, QVector3D color, float edgeLength);
+	CubeFrame(GLenum drawMode, int index, QVector3D color, float edgeLength);
 	~CubeFrame();
 
 	void generateVertices() override;

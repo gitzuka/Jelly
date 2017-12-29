@@ -13,6 +13,8 @@ class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions_4_5_Core
 public:
 	explicit OpenGLWindow(QWidget *parent = 0);
 	~OpenGLWindow();
+
+	void setRenderer(Renderer *renderer);
 	//Physics m_physicComponent;
 
 protected:
@@ -25,7 +27,10 @@ protected:
 	void keyPressEvent(QKeyEvent *event);
 
 private:
-	Renderer m_renderer;
+	Renderer *m_renderer;
+signals:
+	void initializedGL();
+	void paintedGL();
 };
 
 #endif //GLANIMATIONWINDOW_H

@@ -10,7 +10,8 @@ public:
 	~Renderer();
 
 	void initBuffers();
-	void addGraphicComponent(const std::shared_ptr<Graphics> graphics);
+	void addGraphicComponent(std::shared_ptr<Graphics> graphics);
+	std::shared_ptr<Graphics> getGraphics(int index);
 	void draw();
 	Camera& getCamera();
 

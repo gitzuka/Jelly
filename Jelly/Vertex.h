@@ -15,9 +15,9 @@ public:
 	const QVector3D &getPosition() const;
 	const QVector3D &getColor() const;
 	const QVector3D &getNormal() const;
-	void setPosition(QVector3D &position);
-	void setColor(QVector3D &color);
-	void setNormal(QVector3D &normal);
+	void setPosition(const QVector3D &position);
+	void setColor(const QVector3D &color);
+	void setNormal(const QVector3D &normal);
 	static int getPositionOffset();
 	static int getColorOffset();
 	static int getNormalOffset();
