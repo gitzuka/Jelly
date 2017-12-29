@@ -26,12 +26,12 @@ void Scene::initializeScene()
 	lineGraphics->addMesh(std::make_shared<CubeFrame>(GL_LINES, lineGraphics->getMeshes().count(), QVector3D(1.0f, 0, 0), 1.0f));
 	m_renderer.addGraphicComponent(lineGraphics);*/
 	std::shared_ptr<JellyCube> jellyCube = std::make_shared<JellyCube>(GL_LINES, m_renderer.getGraphics(0)->getMeshes().count(), QVector3D(0, 1.0f, 1.0f), 1.0f);
-	m_jelly.createSpringsAndPoints(jellyCube);
+	std::shared_ptr<CubeFrame> cubeFrame = std::make_shared<CubeFrame>(GL_LINES, m_renderer.getGraphics(0)->getMeshes().count(), QVector3D(1.0f, 0, 0), 1.0f);
+	m_jelly.createSpringsAndPoints(jellyCube, cubeFrame);
 	//m_renderer.getGraphics(0)->addMesh(std::make_shared<JellyCube>(GL_LINES, m_renderer.getGraphics(0)->getMeshes().count(), QVector3D(0, 1.0f, 1.0f), 1.0f));
 	m_renderer.getGraphics(0)->addMesh(jellyCube, QOpenGLBuffer::DynamicDraw);
-	m_renderer.getGraphics(0)->addMesh(std::make_shared<CubeFrame>(GL_LINES, m_renderer.getGraphics(0)->getMeshes().count(), QVector3D(1.0f, 0, 0), 1.0f), QOpenGLBuffer::StaticDraw);
-	//m_renderer.getGraphics(0)->initBuffer(0, QOpenGLBuffer::DynamicDraw);
-	//m_renderer.getGraphics(0)->initBuffer(1, QOpenGLBuffer::StaticDraw);
+	//m_renderer.getGraphics(0)->addMesh(std::make_shared<CubeFrame>(GL_LINES, m_renderer.getGraphics(0)->getMeshes().count(), QVector3D(1.0f, 0, 0), 1.0f), QOpenGLBuffer::StaticDraw);
+	m_renderer.getGraphics(0)->addMesh(cubeFrame, QOpenGLBuffer::StaticDraw);
 	//m_jelly.startSimulation();
 }
 

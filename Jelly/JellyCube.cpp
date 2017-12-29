@@ -14,8 +14,9 @@ JellyCube::~JellyCube()
 void JellyCube::generateVertices()
 {
 	int verticesNum = 64;
-	std::vector<QVector3D> cubePos;
-	cubePos.reserve(verticesNum);
+	m_vertices.reserve(verticesNum);
+	//std::vector<QVector3D> cubePos;
+	//cubePos.reserve(verticesNum);
 
 	for (int z = 0; z < 4; ++z)
 	{
@@ -26,16 +27,17 @@ void JellyCube::generateVertices()
 			for (int x = 0; x < 4; ++x)
 			{
 				float ax = -m_edgeLength / 2.0f + 1 / 3.0f * m_edgeLength * x;
-				cubePos.push_back(QVector3D(ax, ay, az));
+				//cubePos.push_back(QVector3D(ax, ay, az));
+				m_vertices.push_back(Vertex(QVector3D(ax, ay, az), m_color, QVector3D()));
+
 			}
 		}
 	}
 
-	m_vertices.reserve(verticesNum);
-	for (int i = 0; i < verticesNum; ++i)
+	/*for (int i = 0; i < verticesNum; ++i)
 	{
 		m_vertices.push_back(Vertex(cubePos.at(i), m_color, QVector3D()));
-	}
+	}*/
 
 }
 
@@ -120,6 +122,12 @@ void JellyCube::generateSprings(std::vector<Spring> &springs, std::vector<JellyP
 			}
 		}
 	}
+}
+
+void JellyCube::generateFrameSprings(std::vector<Spring> &springs, std::vector<JellyPoint> &jellyPoints)
+{
+	springs.reserve(8);
+	jellyPoints.reserve(8);
 }
 
 void JellyCube::generateJellyPoints(std::vector<JellyPoint>& jellyPoints)

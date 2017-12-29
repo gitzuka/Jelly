@@ -118,3 +118,12 @@ void CubeFrame::setEdgeLength(float edgeLength)
 {
 	m_edgeLength = edgeLength;
 }
+
+void CubeFrame::getVerticesPositions(std::vector<QVector3D>& positions) const
+{
+	positions.reserve(8);
+	for (QVector<Vertex>::const_iterator it = m_vertices.begin(); it != m_vertices.end(); ++it)
+	{
+		positions.push_back(it->getPosition());
+	}
+}

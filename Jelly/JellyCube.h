@@ -11,6 +11,7 @@ public:
 	void generateVertices() override;
 	void generateIndices() override;
 	void generateSprings(std::vector<Spring> &springs, std::vector<JellyPoint> &jellyPoints);
+	void generateFrameSprings(std::vector<Spring> &springs, std::vector<JellyPoint> &jellyPoints);
 	void generateJellyPoints(std::vector<JellyPoint> &jellyPoints);
 	void setEdgeLength(float edgeLength);
 	void updateVerticesPositions(const std::vector<JellyPoint> &positions);

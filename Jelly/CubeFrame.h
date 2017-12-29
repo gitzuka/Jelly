@@ -10,6 +10,7 @@ public:
 	void generateVertices() override;
 	void generateIndices() override;
 	void setEdgeLength(float edgeLength);
+	void getVerticesPositions(std::vector<QVector3D> &positions) const;
 
 private:
 	float m_edgeLength;

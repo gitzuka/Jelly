@@ -14,7 +14,7 @@ public:
 	Jelly();
 	virtual ~Jelly();
 	
-	void createSpringsAndPoints(std::shared_ptr<JellyCube> jellyCube);
+	void createSpringsAndPoints(std::shared_ptr<JellyCube> jellyCube, std::shared_ptr<CubeFrame> cubeFrame);
 	const QTimer* getPhysicsTimer() const;
 	const QTimer* getDrawTimer() const;
 	const std::vector<JellyPoint>& getJellyPoints() const;
@@ -29,7 +29,7 @@ private:
 	//std::shared_ptr<CubeFrame> m_frameMesh;
 	Physics m_physics;
 	std::vector<Spring> m_springs;
-	std::vector<Spring> m_frameSprings;
+	std::vector<Spring> m_frameSprings; //first point is frame point, position isnt affected by physics
 	std::vector<JellyPoint> m_framePoints;
 	std::vector<JellyPoint> m_jellyPoints;
 	float m_mass;

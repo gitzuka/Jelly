@@ -2,7 +2,9 @@
 #include <random>
 
 //Jelly::Jelly(std::shared_ptr<Graphics> jellyMesh) : m_jellyGraphics(jellyMesh)
-Jelly::Jelly() : m_physicsStep(5), m_drawStep(100), m_timerPhysics(new QTimer(this)), m_timerDraw(new QTimer(this)), m_simulate(false)
+Jelly::Jelly() 
+	: m_mass(1), m_physicsStep(5), m_drawStep(50), 
+	m_timerPhysics(new QTimer(this)), m_timerDraw(new QTimer(this)), m_simulate(false)
 {
 }
 
@@ -10,9 +12,25 @@ Jelly::~Jelly()
 {
 }
 
-void Jelly::createSpringsAndPoints(std::shared_ptr<JellyCube> jellyCube)
+void Jelly::createSpringsAndPoints(std::shared_ptr<JellyCube> jellyCube, std::shared_ptr<CubeFrame> cubeFrame)
 {
+	std::vector<QVector3D> framePositions;
+	cubeFrame->getVerticesPositions(framePositions);
 	jellyCube->generateSprings(m_springs, m_jellyPoints);
+	m_framePoints.reserve(8);
+	for (std::vector<QVector3D>::const_iterator it = framePositions.begin(); it != framePositions.end(); ++it)
+	{
+		m_framePoints.push_back(JellyPoint(*it, m_mass, QVector3D(0,0,0)));
+	}
+	m_frameSprings.reserve(8);
+	m_frameSprings.push_back(Spring(m_framePoints.at(0), m_jellyPoints.at(0)));
+	m_frameSprings.push_back(Spring(m_framePoints.at(1), m_jellyPoints.at(3)));
+	m_frameSprings.push_back(Spring(m_framePoints.at(2), m_jellyPoints.at(15)));
+	m_frameSprings.push_back(Spring(m_framePoints.at(3), m_jellyPoints.at(12)));
+	m_frameSprings.push_back(Spring(m_framePoints.at(4), m_jellyPoints.at(48)));
+	m_frameSprings.push_back(Spring(m_framePoints.at(5), m_jellyPoints.at(51)));
+	m_frameSprings.push_back(Spring(m_framePoints.at(6), m_jellyPoints.at(63)));
+	m_frameSprings.push_back(Spring(m_framePoints.at(7), m_jellyPoints.at(60)));
 }
 
 const QTimer* Jelly::getPhysicsTimer() const
@@ -33,6 +51,11 @@ const std::vector<JellyPoint>& Jelly::getJellyPoints() const
 void Jelly::updatePhysics()
 {
 	resetForces();
+	for (std::vector<Spring>::iterator springIt = m_frameSprings.begin(); springIt != m_frameSprings.end(); ++springIt)
+	{
+		QVector3D force = m_physics.calculateSpringsForce(*springIt);
+		springIt->applyForce(force);
+	}
 	for (std::vector<Spring>::iterator springIt = m_springs.begin(); springIt != m_springs.end(); ++springIt)
 	{
 		QVector3D force = m_physics.calculateSpringsForce(*springIt);
@@ -111,7 +134,7 @@ void Jelly::randomVelocities()
 {
 	std::random_device rd;
 	std::mt19937 e2(rd());
-	std::uniform_real_distribution<> dist(0.01, 0.1);
+	std::uniform_real_distribution<> dist(-1, 1);
 	for (std::vector<JellyPoint>::iterator it = m_jellyPoints.begin(); it != m_jellyPoints.end(); ++it)
 	{
 		it->setVelocity(QVector3D(dist(e2), dist(e2), dist(e2)));
