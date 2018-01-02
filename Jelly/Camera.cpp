@@ -14,9 +14,7 @@ void Camera::updateView()
 	QMatrix4x4 matYaw = createRotationY(m_yaw);
 
 	m_viewMatrix = matPitch * matYaw * createTranslation(-m_eyeVector);
-	//m_projectionMatrix.perspective(FOV, 1, 0.1f, 50.0f);
 	m_projView = m_projectionMatrix * m_viewMatrix;
-	//m_projViewInv = m_projView.inverted();
 }
 
 void Camera::keyPressed(const unsigned char key)
@@ -68,7 +66,6 @@ void Camera::mouseMoved(float x, float y)
 {
 	m_yaw += x * MOUSE_SENSITIVITY;
 	m_pitch += y * MOUSE_SENSITIVITY;
-
 	updateView();
 }
 
@@ -119,7 +116,10 @@ QMatrix4x4 Camera::createLookAt(const QVector3D &eye, const QVector3D &target, c
 
 QVector4D Camera::transform(const QVector4D &point, const QMatrix4x4 &matrix)
 {
-	return point * matrix;
+	float x = point.x() * matrix.row(0).x() + point.y() *  matrix.row(0).y() + point.z() *  matrix.row(0).z() + point.w() *  matrix.row(0).w();
+	float y = point.x() * matrix.row(1).x() + point.y() *  matrix.row(1).y() + point.z() *  matrix.row(1).z() + point.w() *  matrix.row(1).w();
+	float z = point.x() * matrix.row(2).x() + point.y() *  matrix.row(2).y() + point.z() *  matrix.row(2).z() + point.w() *  matrix.row(2).w();
+	return QVector4D(x, y, z, 1);
 }
 
 QMatrix4x4 Camera::createTranslation(float x, float y, float z)
@@ -219,7 +219,7 @@ QMatrix4x4 Camera::createIdentity()
 QVector4D Camera::multiplyByMatrix(const QMatrix4x4 &mat, const QVector4D &vec)
 {
 	QVector4D vector;
-	float x = mat.row(0).w();
+	//float x = mat.row(0).w();
 	vector.setX(vec.x()*mat.row(0).x() + vec.y()*mat.row(0).y() + vec.z()*mat.row(0).z() + vec.w()*mat.row(0).w());
 	vector.setY(vec.x()*mat.row(1).x() + vec.y()*mat.row(1).y() + vec.z()*mat.row(1).z() + vec.w()*mat.row(1).w());
 	vector.setZ(vec.x()*mat.row(2).x() + vec.y()*mat.row(2).y() + vec.z()*mat.row(2).z() + vec.w()*mat.row(2).w());
@@ -229,6 +229,8 @@ QVector4D Camera::multiplyByMatrix(const QMatrix4x4 &mat, const QVector4D &vec)
 
 QVector3D Camera::convertToScreenSpace(float mouseX, float mouseY, float mouseZ, float width, float heigth, const QMatrix4x4& view, float pitch, float yaw)
 {
+	//float cursorPosX = mouseX / (width * 0.5f) - 1.0f;
+	//float cursorPosY = -mouseY / (heigth * 0.5f) + 1.0f;
 	float cursorPosX = mouseX / (width * 0.5f) - 1.0f;
 	float cursorPosY = -mouseY / (heigth * 0.5f) + 1.0f;
 

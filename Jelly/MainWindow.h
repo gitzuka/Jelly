@@ -4,6 +4,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_MainWindow.h"
 #include "Scene.h"
+#include <QKeyEvent>
 
 class MainWindow : public QMainWindow
 {
@@ -16,8 +17,19 @@ public:
 private:
 	Ui::MainWindow ui;
 	Scene m_scene;
+	QString m_cursorLabelText;
 
 	void connectUi();
+	void initializeProgram();
+
+private slots:
+	void updateCursorLabel(const QVector3D &pos) const;
+	void toggleCursorCheckobx() const;
+	void processKey(QKeyEvent *event);
+
+signals:
+	void qKeyPressed();
+	void cursorCheckboxToggled(bool) const;
 };
 
 #endif // JELLY_H

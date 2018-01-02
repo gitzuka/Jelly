@@ -1,7 +1,8 @@
 #include "CubeFrame.h"
+#include "Camera.h"
 
 CubeFrame::CubeFrame(GLenum drawMode, int index, QVector3D color = QVector3D(1.0f, 0, 0), float edgeLength = 0.1f)
-	: Mesh(drawMode, index), m_edgeLength(edgeLength), m_color(color)
+	: Mesh(drawMode, index), m_edgeLength(edgeLength), m_color(color), m_pitch(0), m_yaw(0)
 {
 	CubeFrame::generateVertices();
 	CubeFrame::generateIndices();
@@ -45,39 +46,6 @@ void CubeFrame::generateVertices()
 		Vertex(cubePos.at(6), m_color, cubeNormals.at(2)),
 		Vertex(cubePos.at(7), m_color, cubeNormals.at(2))
 	};
-
-	//m_vertices.reserve(24);
-	//m_vertices = {
-	//	Vertex(cubePos.at(1), m_color, cubeNormals.at(1)), //right
-	//	Vertex(cubePos.at(5), m_color, cubeNormals.at(1)),
-	//	Vertex(cubePos.at(6), m_color, cubeNormals.at(1)),
-	//	Vertex(cubePos.at(2), m_color, cubeNormals.at(1)),
-
-	//	Vertex(cubePos.at(4), m_color, cubeNormals.at(2)), //left
-	//	Vertex(cubePos.at(0), m_color, cubeNormals.at(2)),
-	//	Vertex(cubePos.at(3), m_color, cubeNormals.at(2)),
-	//	Vertex(cubePos.at(7), m_color, cubeNormals.at(2)),
-
-	//	Vertex(cubePos.at(4), m_color, cubeNormals.at(3)), //top
-	//	Vertex(cubePos.at(5), m_color, cubeNormals.at(3)),
-	//	Vertex(cubePos.at(1), m_color, cubeNormals.at(3)),
-	//	Vertex(cubePos.at(0), m_color, cubeNormals.at(3)),
-
-	//	Vertex(cubePos.at(3), m_color, cubeNormals.at(4)),
-	//	Vertex(cubePos.at(2), m_color, cubeNormals.at(4)),
-	//	Vertex(cubePos.at(6), m_color, cubeNormals.at(4)),
-	//	Vertex(cubePos.at(7), m_color, cubeNormals.at(4)), //bot
-
-	//	Vertex(cubePos.at(0), m_color, cubeNormals.at(5)), //back
-	//	Vertex(cubePos.at(1), m_color, cubeNormals.at(5)),
-	//	Vertex(cubePos.at(2), m_color, cubeNormals.at(5)),
-	//	Vertex(cubePos.at(3), m_color, cubeNormals.at(5)),
-
-	//	Vertex(cubePos.at(7), m_color, cubeNormals.at(0)), //front
-	//	Vertex(cubePos.at(6), m_color, cubeNormals.at(0)),
-	//	Vertex(cubePos.at(5), m_color, cubeNormals.at(0)),
-	//	Vertex(cubePos.at(4), m_color, cubeNormals.at(0))
-	//};
 }
 
 void CubeFrame::generateIndices()
@@ -124,6 +92,46 @@ void CubeFrame::getVerticesPositions(std::vector<QVector3D>& positions) const
 	positions.reserve(8);
 	for (QVector<Vertex>::const_iterator it = m_vertices.begin(); it != m_vertices.end(); ++it)
 	{
-		positions.push_back(it->getPosition());
+		//QVector3D pos = it->getPosition();
+		//pos.setX(pos.x() + m_modelMatrix.row(0).w());
+		//pos.setY(pos.y() + m_modelMatrix.row(1).w());
+		//pos.setZ(pos.z() + m_modelMatrix.row(2).w());
+		////positions.push_back(pos);*/
+		//QVector3D test = QVector3D(Camera::transform(QVector4D(it->getPosition(), 1), getModelMatrix()));
+		positions.push_back(QVector3D(Camera::transform(QVector4D(it->getPosition(), 1), getModelMatrix())));
 	}
+}
+
+void CubeFrame::setPitch(float pitch)
+{
+	m_pitch = clipAngle(m_pitch + pitch);
+}
+
+void CubeFrame::setYaw(float yaw)
+{
+	m_yaw = clipAngle(m_yaw + yaw);
+}
+
+void CubeFrame::moveFrame(const QMatrix4x4& mat)
+{
+	setModelMatrix(mat);
+	rotate(m_pitch, m_yaw);
+}
+
+void CubeFrame::rotate(float pitch, float yaw)
+{
+	setPitch(pitch);
+	setYaw(yaw);
+	QMatrix4x4 mat = Camera::createTranslation(QVector3D(getModelMatrix().column(3)));
+	mat.rotate(m_pitch, QVector3D(1, 0, 0));
+	mat.rotate(m_yaw, QVector3D(0, 1, 0));
+	setModelMatrix(mat);
+}
+
+float CubeFrame::clipAngle(float angle) const
+{
+	int ang = angle;
+	float a = angle >= 0 ? 0 : 360;
+	a += ang % 360;
+	return a;
 }

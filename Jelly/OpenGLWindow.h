@@ -28,9 +28,16 @@ protected:
 
 private:
 	Renderer *m_renderer;
+
+private slots:
+	void setCursorState(bool checked);
+
 signals:
 	void initializedGL();
 	void paintedGL();
+	void leftMouseClicked(float x, float y, bool z, float width, float height, bool clicked);
+	void keyPressed(QKeyEvent *event);
+	void initRotation(float, float);
 };
 
 #endif //GLANIMATIONWINDOW_H

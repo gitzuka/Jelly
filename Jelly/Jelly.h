@@ -10,7 +10,6 @@ class Jelly : public QObject
 {
 	Q_OBJECT
 public:
-	//explicit Jelly(std::shared_ptr<Graphics> jellyMesh);
 	Jelly();
 	virtual ~Jelly();
 	
@@ -19,40 +18,35 @@ public:
 	const QTimer* getDrawTimer() const;
 	const std::vector<JellyPoint>& getJellyPoints() const;
 	void startSimulation();
-	//void addJellyMesh(std::shared_ptr<JellyCube> jellyMesh);
-	//void addJellyGraphics(std::shared_ptr<Graphics> jellyMesh);
-	//void addJellyCubeFrame(std::shared_ptr<CubeFrame> jellyMesh);
 
 private:
-	//std::shared_ptr<JellyCube> m_jellyMesh;
-	//std::shared_ptr<Graphics> m_jellyGraphics;
-	//std::shared_ptr<CubeFrame> m_frameMesh;
 	Physics m_physics;
 	std::vector<Spring> m_springs;
 	std::vector<Spring> m_frameSprings; //first point is frame point, position isnt affected by physics
 	std::vector<JellyPoint> m_framePoints;
 	std::vector<JellyPoint> m_jellyPoints;
-	float m_mass;
+	float m_velocitiesRange;
+	float m_positionsRange;
 	int m_physicsStep;
 	int m_drawStep;
 	QTimer *m_timerPhysics;
 	QTimer *m_timerDraw;
 	bool m_simulate;
-	//int m_calculationCycles;
 
 	void resetForces();
-	/*void calculateForces();
-	void calculateVelocities();
-	void calculatePositions();*/
-	void connectToGraphics(std::shared_ptr<Graphics> jellyGraphics);
 
 signals:
 	void simulationUpdated(int jellyIndex);
 
-public slots:
+private slots:
 	void setk(double k);
 	void setc1(double c1);
+	void setc2(double c2);
 	void setMasses(double mass);
 	void randomVelocities();
+	void randomPositions();
 	void updatePhysics();
+	void updateFramePosition(std::shared_ptr<CubeFrame> cubeFrame);
+	void setVelocitiesRange(double velocitiesRange);
+	void setPositionsRange(double positionsRange);
 };

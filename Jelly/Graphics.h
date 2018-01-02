@@ -27,9 +27,11 @@ public:
 	void assignShaderProgram(QOpenGLShaderProgram *program);
 	const QVector<std::shared_ptr<Mesh>>& Graphics::getMeshes() const;
 	void draw(const QMatrix4x4 &projView);
+	void setDrawState(bool draw, int index);
 
 private:
 	QVector<std::shared_ptr<Mesh>> m_meshes;
+	std::vector<bool> m_drawState;
 	std::vector<QOpenGLBuffer> m_vbos;
 	std::vector<QOpenGLBuffer> m_ibos;
 	QOpenGLVertexArrayObject m_vao;

@@ -20,7 +20,6 @@ public:
 	QMatrix4x4 m_viewMatrix;
 	QMatrix4x4 m_projectionMatrix;
 	QMatrix4x4 m_projView;
-	//QMatrix4x4 m_projViewInv;
 
 	void updateView();
 	void keyPressed(const unsigned char key);

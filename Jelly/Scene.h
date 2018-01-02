@@ -9,16 +9,30 @@ public:
 	Scene();
 	~Scene();
 
-	void connect();
 	Renderer *getRenderer();
 	Jelly& getJelly();
-	//void initializeScene();
+
 private:
 	Renderer m_renderer;
 	Jelly m_jelly;
-	
+	int m_jellyIndex;
+	int m_frameIndex;
+	int m_cursorIndex;
+	bool m_drawPoints;
 
-public slots:
+signals:
+	void frameMoved(std::shared_ptr<CubeFrame> cubeFrame);
+	void cursorPosUpdated(const QVector3D &pos);
+
+private slots:
 	void initializeScene();
 	void draw();
+	void moveFrame(float x, float y, bool z, float width, float height, bool mouseClicked);
+	void setCursorDrawState(bool draw);
+	void updatePointsModelMats();
+	void setPointsDrawState(int draw);
+	void setFrameDrawState(int draw);
+	void setJellyDrawState(int draw);
+	void rotateFrame(float pitch, float yaw);
+	//void setDrawState(bool draw, )
 };

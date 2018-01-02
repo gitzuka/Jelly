@@ -144,6 +144,7 @@ void Graphics::updateVertexBufferData(int offset, const QVector<Vertex> &vertice
 void Graphics::addMesh(const std::shared_ptr<Mesh> mesh, QOpenGLBuffer::UsagePattern bufferUsage)
 {
 	m_meshes.append(mesh);
+	m_drawState.push_back(true);
 	initBuffer(m_meshes.count() - 1, bufferUsage);
 }
 
@@ -163,6 +164,11 @@ void Graphics::draw(const QMatrix4x4 &projView)
 	int i = 0;
 	for (QVector<std::shared_ptr<Mesh>>::iterator it = m_meshes.begin(); it != m_meshes.end(); ++it)
 	{
+		if (!m_drawState.at(i))
+		{
+			++i;
+			continue;
+		}
 		m_program->setUniformValue(m_program->uniformLocation("MVP"), projView * (*it)->getModelMatrix());
 		m_vao.bind();
 		m_vbos.at(i).bind();
@@ -178,6 +184,11 @@ void Graphics::draw(const QMatrix4x4 &projView)
 		++i;
 	}
 	m_program->release();
+}
+
+void Graphics::setDrawState(bool draw, int index)
+{
+	m_drawState.at(index) = draw;
 }
 
 void Graphics::updateJellyData(int jellyIndex, const std::vector<JellyPoint>& positions)
