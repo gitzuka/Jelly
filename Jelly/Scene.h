@@ -28,7 +28,7 @@ private slots:
 	void initializeScene();
 	void draw();
 	void moveFrame(float x, float y, bool z, float width, float height, bool mouseClicked);
-	void setCursorDrawState(bool draw);
+	void setCursorDrawState(int draw);
 	void updatePointsModelMats();
 	void setPointsDrawState(int draw);
 	void setFrameDrawState(int draw);

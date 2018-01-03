@@ -43,9 +43,7 @@ void Scene::draw()
 
 void Scene::moveFrame(float x, float y, bool z, float width, float height, bool mouseClicked)
 {
-	//QMatrix4x4 mat;
-	//QVector3D translation = QVector3D(m_renderer.getCamera().m_viewMatrix.column(3));
-	std::dynamic_pointer_cast<Cursor3D>(m_renderer.getGraphics(0)->getMeshes().at(m_cursorIndex))->setPosition(x, y, z, width, height,
+	QVector3D pos = std::dynamic_pointer_cast<Cursor3D>(m_renderer.getGraphics(0)->getMeshes().at(m_cursorIndex))->setPosition(x, y, z, width, height,
 		m_renderer.getCamera());
 	if (mouseClicked)
 	{
@@ -53,14 +51,13 @@ void Scene::moveFrame(float x, float y, bool z, float width, float height, bool 
 		//m_renderer.getGraphics(0)->getMeshes().at(m_frameIndex)->setModelMatrix(m_renderer.getGraphics(0)->getMeshes().at(m_cursorIndex)->getModelMatrix());
 		emit frameMoved(std::dynamic_pointer_cast<CubeFrame>(m_renderer.getGraphics(0)->getMeshes().at(m_frameIndex)));
 	}
-	emit cursorPosUpdated(std::dynamic_pointer_cast<Cursor3D>(m_renderer.getGraphics(0)->getMeshes().at(m_cursorIndex))->getPosition());
-	//QVector3D translation = Camera::convertToScreenSpace()
-	//m_renderer.getGraphics(0)->getMeshes().at(m_frameIndex)->setModelMatrix(mat);
+	//emit cursorPosUpdated(std::dynamic_pointer_cast<Cursor3D>(m_renderer.getGraphics(0)->getMeshes().at(m_cursorIndex))->getPosition());
+	emit cursorPosUpdated(pos);
 }
 
 
 
-void Scene::setCursorDrawState(bool draw)
+void Scene::setCursorDrawState(int draw)
 {
 	m_renderer.getGraphics(0)->setDrawState(draw, m_cursorIndex);
 }

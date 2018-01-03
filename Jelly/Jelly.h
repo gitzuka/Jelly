@@ -34,9 +34,9 @@ private:
 	bool m_simulate;
 
 	void resetForces();
-
-signals:
-	void simulationUpdated(int jellyIndex);
+//
+//signals:
+//	void simulationUpdated(int jellyIndex);
 
 private slots:
 	void setk(double k);

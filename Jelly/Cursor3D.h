@@ -11,7 +11,7 @@ public:
 
 	void generateVertices() override;
 	void generateIndices() override;
-	void setPosition(float mouseX, float mouseY, bool z, float width, float heigth, const Camera &viewMat);
+	QVector3D setPosition(float mouseX, float mouseY, bool z, float width, float heigth, const Camera &viewMat);
 	void rotate(float pitch, float yaw);
 	QVector3D getPosition() const;
 

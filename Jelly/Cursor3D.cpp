@@ -32,17 +32,43 @@ void Cursor3D::generateIndices()
 	}
 }
 
-void Cursor3D::setPosition(float mouseX, float mouseY, bool z, float width, float heigth, const Camera &cam)
+QVector3D Cursor3D::setPosition(float mouseX, float mouseY, bool z, float width, float heigth, const Camera &cam)
 {
-	float cursorPosX = (mouseX - width / 2.0f - m_mousePosX) / width;
+	float x = mouseX - width / 2.0f;
+	float y = mouseY - heigth / 2.0f;
+	float cursorPosX = (x - m_mousePosX) / width;
 	float cursorPosY = 0, cursorPosZ = 0;
 	if (z)
 	{
-		cursorPosZ = (mouseY - heigth / 2.0f - m_mousePosY) / heigth;
+		cursorPosZ = (y - m_mousePosY) / heigth;
 	}
 	else
 	{
-		cursorPosY = - (mouseY - heigth / 2.0f - m_mousePosY) / heigth;
+		cursorPosY = -(y - m_mousePosY) / heigth;
+	}
+	m_position.setX(cursorPosX + m_position.x());
+	m_position.setY(cursorPosY + m_position.y());
+	m_position.setZ(cursorPosZ + m_position.z());
+	QVector3D trans = QVector3D(- cam.m_viewMatrix.row(0).w() + m_position.x(),
+		- cam.m_viewMatrix.row(1).w() + m_position.y(),
+		- cam.m_viewMatrix.row(2).w() - 3 + m_position.z());
+	setModelMatrix((Camera::createRotationX(cam.m_pitch) * Camera::createRotationY(cam.m_yaw)).inverted()
+		* Camera::createTranslation(trans));
+
+	m_mousePosX = x;
+	m_mousePosY = y;
+	return m_position;
+	/*float x = mouseX - width / 2.0f;
+	float y = mouseY - heigth / 2.0f;
+	float cursorPosX = (x - m_mousePosX) / width;
+	float cursorPosY = 0, cursorPosZ = 0;
+	if (z)
+	{
+		cursorPosZ = (y - m_mousePosY) / heigth;
+	}
+	else
+	{
+		cursorPosY = - (y - m_mousePosY) / heigth;
 	}
 	QVector3D trans = QVector3D(cursorPosX - cam.m_viewMatrix.row(0).w() + m_position.x(),
 		cursorPosY - cam.m_viewMatrix.row(1).w() + m_position.y(),
@@ -53,8 +79,8 @@ void Cursor3D::setPosition(float mouseX, float mouseY, bool z, float width, floa
 	m_position.setY(cursorPosY + m_position.y());
 	m_position.setZ(cursorPosZ + m_position.z());
 
-	m_mousePosX = mouseX - width / 2.0f;
-	m_mousePosY = mouseY - heigth / 2.0f;
+	m_mousePosX = x;
+	m_mousePosY = y;*/
 }
 
 void Cursor3D::rotate(float pitch, float yaw)

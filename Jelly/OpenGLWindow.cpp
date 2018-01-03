@@ -65,6 +65,7 @@ void OpenGLWindow::mouseMoveEvent(QMouseEvent* event)
 	//float x = event->x() - this->width() / 2.0f;
 	float dx = event->x() - m_renderer->getCamera().m_mousePos.x();
 	float dy = event->y() - m_renderer->getCamera().m_mousePos.y();
+	m_renderer->getCamera().m_mousePos = event->pos();
 	if (event->buttons() & Qt::RightButton)
 	{
 		m_renderer->getCamera().mouseMoved(dx, dy);
@@ -73,9 +74,12 @@ void OpenGLWindow::mouseMoveEvent(QMouseEvent* event)
 	{
 		emit initRotation(dy, dx);
 	}
+	if (this->cursor().shape() == Qt::ArrowCursor)
+	{
+		return;
+	}
 	emit leftMouseClicked(event->x(), event->y(), QGuiApplication::keyboardModifiers().testFlag(Qt::ControlModifier), this->width(), this->height(), false);
 
-	m_renderer->getCamera().m_mousePos = event->pos();
 	//this->update();
 	//float x = event->x() - this->width() / 2.0f;
 	//float dx = x - m_renderer->getCamera().m_mousePos.x();
@@ -94,8 +98,8 @@ void OpenGLWindow::mouseMoveEvent(QMouseEvent* event)
 void OpenGLWindow::keyPressEvent(QKeyEvent *event)
 {
 	m_renderer->getCamera().keyPressed(event->key());
-	/*emit keyPressed(event);
-	switch (event->key())
+	emit keyPressed(event);
+	/*switch (event->key())
 	{
 	case 'T':
 	{
@@ -106,7 +110,7 @@ void OpenGLWindow::keyPressEvent(QKeyEvent *event)
 	this->update();
 }
 
-void OpenGLWindow::setCursorState(bool checked)
+void OpenGLWindow::setCursorState(int checked)
 {
 	checked ? this->setCursor(Qt::BlankCursor) : this->setCursor(Qt::ArrowCursor);
 }

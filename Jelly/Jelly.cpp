@@ -2,7 +2,7 @@
 #include <random>
 
 Jelly::Jelly() 
-	: m_velocitiesRange(0), m_positionsRange(0), m_physicsStep(3), m_drawStep(30), 
+	: m_velocitiesRange(0), m_positionsRange(0), m_physicsStep(5), m_drawStep(30), 
 	m_timerPhysics(new QTimer(this)), m_timerDraw(new QTimer(this)), m_simulate(false)
 {
 }

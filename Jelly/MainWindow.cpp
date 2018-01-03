@@ -34,22 +34,25 @@ void MainWindow::connectUi()
 	connect(ui.doubleSpinBox_PosRange, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setPositionsRange(double)));
 	connect(ui.pushButton_randomV, SIGNAL(clicked()), &m_scene.getJelly(), SLOT(randomVelocities()));
 	connect(ui.pushButton_randomPos, SIGNAL(clicked()), &m_scene.getJelly(), SLOT(randomVelocities()));
-	connect(this, SIGNAL(cursorCheckboxToggled(bool)), &m_scene, SLOT(setCursorDrawState(bool)));
-	connect(this, SIGNAL(cursorCheckboxToggled(bool)), ui.openGLWidget, SLOT(setCursorState(bool)));
+	connect(this, SIGNAL(cursorCheckboxToggled(int)), &m_scene, SLOT(setCursorDrawState(int)));
+	connect(this, SIGNAL(cursorCheckboxToggled(int)), ui.openGLWidget, SLOT(setCursorState(int)));
 	connect(ui.checkBox_points, SIGNAL(stateChanged(int)), &m_scene, SLOT(setPointsDrawState(int)));
 	connect(ui.checkBox_frame, SIGNAL(stateChanged(int)), &m_scene, SLOT(setFrameDrawState(int)));
 	connect(ui.checkBox_jelly, SIGNAL(stateChanged(int)), &m_scene, SLOT(setJellyDrawState(int)));
+	connect(ui.checkBox_cursor, SIGNAL(stateChanged(int)), ui.openGLWidget, SLOT(setCursorState(int)));
+	connect(ui.checkBox_cursor, SIGNAL(stateChanged(int)), &m_scene, SLOT(setCursorDrawState(int)));
 
 	connect(ui.openGLWidget, SIGNAL(initializedGL()), &m_scene, SLOT(initializeScene()));
 	connect(ui.openGLWidget, SIGNAL(paintedGL()), &m_scene, SLOT(draw()));
 	connect(ui.openGLWidget, SIGNAL(leftMouseClicked(float, float, bool, float, float, bool)), &m_scene, SLOT(moveFrame(float, float, bool, float, float, bool)));
 	connect(ui.openGLWidget, SIGNAL(initRotation(float, float)), &m_scene, SLOT(rotateFrame(float, float)));
+	connect(ui.openGLWidget, SIGNAL(paintedGL()), &m_scene, SLOT(draw()));
 
-	connect(&m_scene.getJelly(), SIGNAL(simulationUpdated(int)), &m_scene, SLOT(draw(int)));
+	//connect(&m_scene.getJelly(), SIGNAL(simulationUpdated(int)), &m_scene, SLOT(draw(int)));
 	connect(&m_scene, SIGNAL(frameMoved(std::shared_ptr<CubeFrame>)), &m_scene.getJelly(), SLOT(updateFramePosition(std::shared_ptr<CubeFrame>)));
 	connect(&m_scene, SIGNAL(cursorPosUpdated(const QVector3D&)), this, SLOT(updateCursorLabel(const QVector3D&)));
 	connect(m_scene.getJelly().getPhysicsTimer(), SIGNAL(timeout()), &m_scene.getJelly(), SLOT(updatePhysics()));
-	connect(m_scene.getJelly().getDrawTimer(), SIGNAL(timeout()), &m_scene, SLOT(draw()));
+	//connect(m_scene.getJelly().getDrawTimer(), SIGNAL(timeout()), &m_scene, SLOT(draw()));
 	connect(m_scene.getJelly().getDrawTimer(), SIGNAL(timeout()), ui.openGLWidget, SLOT(update()));
 
 	connect(this, SIGNAL(qKeyPressed()), this, SLOT(toggleCursorCheckobx()));

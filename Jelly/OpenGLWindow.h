@@ -30,7 +30,7 @@ private:
 	Renderer *m_renderer;
 
 private slots:
-	void setCursorState(bool checked);
+	void setCursorState(int checked);
 
 signals:
 	void initializedGL();

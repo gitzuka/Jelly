@@ -29,7 +29,7 @@ private slots:
 
 signals:
 	void qKeyPressed();
-	void cursorCheckboxToggled(bool) const;
+	void cursorCheckboxToggled(int) const;
 };
 
 #endif // JELLY_H

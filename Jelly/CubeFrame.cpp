@@ -122,6 +122,7 @@ void CubeFrame::rotate(float pitch, float yaw)
 {
 	setPitch(pitch);
 	setYaw(yaw);
+	//camera inv?
 	QMatrix4x4 mat = Camera::createTranslation(QVector3D(getModelMatrix().column(3)));
 	mat.rotate(m_pitch, QVector3D(1, 0, 0));
 	mat.rotate(m_yaw, QVector3D(0, 1, 0));
