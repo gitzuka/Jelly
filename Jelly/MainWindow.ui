@@ -123,7 +123,7 @@
         <item row="2" column="1">
          <widget class="QDoubleSpinBox" name="doubleSpinBox_c2">
           <property name="minimum">
-           <double>0.010000000000000</double>
+           <double>0.000000000000000</double>
           </property>
           <property name="maximum">
            <double>100.000000000000000</double>

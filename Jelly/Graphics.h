@@ -28,6 +28,7 @@ public:
 	const QVector<std::shared_ptr<Mesh>>& Graphics::getMeshes() const;
 	void draw(const QMatrix4x4 &projView);
 	void setDrawState(bool draw, int index);
+	QOpenGLShaderProgram* getProgram();
 
 private:
 	QVector<std::shared_ptr<Mesh>> m_meshes;

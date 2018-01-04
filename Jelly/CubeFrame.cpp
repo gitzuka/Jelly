@@ -112,27 +112,52 @@ void CubeFrame::setYaw(float yaw)
 	m_yaw = clipAngle(m_yaw + yaw);
 }
 
-void CubeFrame::moveFrame(const QMatrix4x4& mat)
+void CubeFrame::moveFrame(const QMatrix4x4& mat, const Camera &cam)
 {
+	/*setPitch(m_pitch);
+	setYaw(m_yaw);
+	QVector3D trans = QVector3D(getModelMatrix().column(3));
+	QMatrix4x4 mat2 = Camera::createTranslation(-trans)* Camera::createRotationY(m_yaw) * Camera::createTranslation(trans) *  Camera::createTranslation(QVector3D(mat.column(3)));
+	mat2 = mat;
+	mat2.rotate(m_pitch, QVector3D(1, 0, 0));
+	setModelMatrix(mat2);*/
 	setModelMatrix(mat);
-	rotate(m_pitch, m_yaw);
+	rotate(m_pitch, m_yaw, cam);
 }
 
-void CubeFrame::rotate(float pitch, float yaw)
+void CubeFrame::rotate(float pitch, float yaw, const Camera &cam)
 {
 	setPitch(pitch);
 	setYaw(yaw);
 	//camera inv?
-	QMatrix4x4 mat = Camera::createTranslation(QVector3D(getModelMatrix().column(3)));
-	mat.rotate(m_pitch, QVector3D(1, 0, 0));
-	mat.rotate(m_yaw, QVector3D(0, 1, 0));
-	setModelMatrix(mat);
+	QVector3D trans = QVector3D(getModelMatrix().column(3));
+	QMatrix4x4 mat = Camera::createTranslation(-trans)* Camera::createRotationY(yaw) * Camera::createTranslation(trans);
+	//mat * Camera::createRotationY(yaw) * Camera::createTranslation(trans);
+	//mat.translate(trans);
+	m_modelMatrix.rotate(m_yaw, QVector3D(0, 1, 0));
+	m_modelMatrix.rotate(m_pitch, QVector3D(1, 0, 0));
+	//setModelMatrix();
+	//QMatrix4x4 mat = Camera::createTranslation(QVector3D(getModelMatrix().column(3)));
+	////mat.rotate(m_pitch, QVector3D(1, 0, 0));
+	//mat.rotate(m_yaw, QVector3D(0, 1, 0));
+	//setModelMatrix(mat);
 }
 
 float CubeFrame::clipAngle(float angle) const
 {
-	int ang = angle;
+	if (angle >=0)
+	{
+		while (angle >= 360)
+			angle -= 360;
+	}
+	else
+	{
+		while (angle < -360)
+			angle += 360;
+	}
+	return angle * 0.1f;
+	/*int ang = angle;
 	float a = angle >= 0 ? 0 : 360;
 	a += ang % 360;
-	return a;
+	return a * 0.1f;*/
 }

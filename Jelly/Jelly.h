@@ -18,6 +18,7 @@ public:
 	const QTimer* getDrawTimer() const;
 	const std::vector<JellyPoint>& getJellyPoints() const;
 	void startSimulation();
+	QVector<QVector3D> getJellyPointsPositions() const;
 
 private:
 	Physics m_physics;

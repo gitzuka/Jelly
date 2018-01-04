@@ -1,6 +1,8 @@
 #pragma once
 #include "Mesh.h"
 
+class Camera;
+
 class CubeFrame : public Mesh
 {
 public:
@@ -13,8 +15,8 @@ public:
 	void getVerticesPositions(std::vector<QVector3D> &positions) const;
 	void setPitch(float pitch);
 	void setYaw(float yaw);
-	void moveFrame(const QMatrix4x4 &mat);
-	void rotate(float pitch, float yaw);
+	void moveFrame(const QMatrix4x4 &mat, const Camera &cam);
+	void rotate(float pitch, float yaw, const Camera &cam);
 
 private:
 	float m_edgeLength;

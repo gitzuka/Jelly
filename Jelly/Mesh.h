@@ -30,9 +30,4 @@ protected:
 
 private:
 	const int m_index;
-	//QVector<int> m_indices;
-	//QVector<Vertex> m_normals;
-	//QOpenGLBuffer m_vertexBuffer;
-	//QOpenGLVertexArrayObject m_vao;
-	//QOpenGLShaderProgram *m_program;
 };

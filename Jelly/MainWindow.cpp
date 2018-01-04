@@ -27,7 +27,7 @@ void MainWindow::processKey(QKeyEvent* event)
 void MainWindow::connectUi()
 {
 	connect(ui.doubleSpinBox_c1, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setc1(double)));
-	connect(ui.doubleSpinBox_c2, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setc1(double)));
+	connect(ui.doubleSpinBox_c2, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setc2(double)));
 	connect(ui.doubleSpinBox_k, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setk(double)));
 	connect(ui.doubleSpinBox_mass, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setMasses(double)));
 	connect(ui.doubleSpinBox_VRange, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setVelocitiesRange(double)));

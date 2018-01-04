@@ -191,6 +191,11 @@ void Graphics::setDrawState(bool draw, int index)
 	m_drawState.at(index) = draw;
 }
 
+QOpenGLShaderProgram* Graphics::getProgram()
+{
+	return m_program;
+}
+
 void Graphics::updateJellyData(int jellyIndex, const std::vector<JellyPoint>& positions)
 {
 	std::dynamic_pointer_cast<JellyCube>(m_meshes.at(jellyIndex))->updateVerticesPositions(positions);

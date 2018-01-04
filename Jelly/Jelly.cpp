@@ -101,6 +101,17 @@ void Jelly::resetForces()
 	}
 }
 
+QVector<QVector3D> Jelly::getJellyPointsPositions() const
+{
+	QVector<QVector3D> positions;
+	positions.reserve(64);
+	for (std::vector<JellyPoint>::const_iterator it = m_jellyPoints.begin(); it != m_jellyPoints.end(); ++it)
+	{
+		positions.push_back(it->getPosition());
+	}
+	return positions;
+}
+
 void Jelly::setk(double k)
 {
 	m_physics.setFriction(k);

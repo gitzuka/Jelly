@@ -64,6 +64,11 @@ void Renderer::draw()
 	{
 		(*it)->draw(m_camera.m_projView);
 	}
+	/*m_graphics.at(0)->draw(m_camera.m_projView);
+	m_graphics.at(1)->getProgram()->bind();
+	m_graphics.at(1)->getProgram()->setUniformValueArray("points", , 64);
+
+	m_graphics.at(1)->draw(m_camera.m_projView);*/
 }
 
 Camera& Renderer::getCamera()

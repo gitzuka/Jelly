@@ -34,8 +34,8 @@ void Cursor3D::generateIndices()
 
 QVector3D Cursor3D::setPosition(float mouseX, float mouseY, bool z, float width, float heigth, const Camera &cam)
 {
-	float x = mouseX - width / 2.0f;
-	float y = mouseY - heigth / 2.0f;
+	float x = (cam.m_eyeVector.z() + 1.0f) * ( mouseX  - width / 2.0f);
+	float y = (cam.m_eyeVector.z() + 1.0f) * (mouseY - heigth / 2.0f);
 	float cursorPosX = (x - m_mousePosX) / width;
 	float cursorPosY = 0, cursorPosZ = 0;
 	if (z)
@@ -51,7 +51,7 @@ QVector3D Cursor3D::setPosition(float mouseX, float mouseY, bool z, float width,
 	m_position.setZ(cursorPosZ + m_position.z());
 	QVector3D trans = QVector3D(- cam.m_viewMatrix.row(0).w() + m_position.x(),
 		- cam.m_viewMatrix.row(1).w() + m_position.y(),
-		- cam.m_viewMatrix.row(2).w() - 3 + m_position.z());
+		- cam.m_viewMatrix.row(2).w() - cam.m_eyeVector.z() + m_position.z());
 	setModelMatrix((Camera::createRotationX(cam.m_pitch) * Camera::createRotationY(cam.m_yaw)).inverted()
 		* Camera::createTranslation(trans));
 
