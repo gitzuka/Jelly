@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 Cursor3D::Cursor3D(GLenum drawMode, int index)
-	: Mesh(drawMode, index), m_position(QVector3D(0,0,0)), m_length(0.2), m_mousePosX(0), m_mousePosY(0)
+	: Mesh(drawMode, index), m_position(QVector3D(0,0,0)), m_mousePosX(0), m_mousePosY(0), m_length(0.2)
 {
 	Cursor3D::generateVertices();
 	Cursor3D::generateIndices();
@@ -51,7 +51,8 @@ QVector3D Cursor3D::setPosition(float mouseX, float mouseY, bool z, float width,
 	m_position.setZ(cursorPosZ + m_position.z());
 	QVector3D trans = QVector3D(- cam.m_viewMatrix.row(0).w() + m_position.x(),
 		- cam.m_viewMatrix.row(1).w() + m_position.y(),
-		- cam.m_viewMatrix.row(2).w() - cam.m_eyeVector.z() + m_position.z());
+		-cam.m_viewMatrix.row(2).w() - cam.m_eyeVector.z() + m_position.z());
+		//-cam.m_eyeVector.z());
 	setModelMatrix((Camera::createRotationX(cam.m_pitch) * Camera::createRotationY(cam.m_yaw)).inverted()
 		* Camera::createTranslation(trans));
 

@@ -1,7 +1,8 @@
 #include "OpenGLWindow.h"
 #include <QtGui>
+#include "Cursor3D.h"
 
-OpenGLWindow::OpenGLWindow(QWidget* parent) : m_renderer(nullptr)
+OpenGLWindow::OpenGLWindow(QWidget* parent) : m_renderer(nullptr), m_dx(0), m_dy(0)
 {
 }
 
@@ -47,6 +48,7 @@ void OpenGLWindow::initializeGL()
 void OpenGLWindow::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+	//emit leftMouseClicked(m_dx, m_dy, QGuiApplication::keyboardModifiers().testFlag(Qt::ControlModifier), this->width(), this->height(), false);
 	emit paintedGL();
 	//m_renderer->draw();
 }
@@ -74,6 +76,8 @@ void OpenGLWindow::mouseMoveEvent(QMouseEvent* event)
 	//float x = event->x() - this->width() / 2.0f;
 	float dx = event->x() - m_renderer->getCamera().m_mousePos.x();
 	float dy = event->y() - m_renderer->getCamera().m_mousePos.y();
+	//m_dx = event->x();
+	//m_dy = event->y();
 	m_renderer->getCamera().m_mousePos = event->pos();
 	if (event->buttons() & Qt::RightButton)
 	{

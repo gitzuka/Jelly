@@ -22,7 +22,9 @@ private:
 	int m_cuboidIndex;
 	int m_modelIndex;
 	bool m_drawPoints;
-	QMatrix4x4 m_local;
+	//QMatrix4x4 m_local;
+
+	void loadModel();
 
 signals:
 	void frameMoved(std::shared_ptr<CubeFrame> cubeFrame);

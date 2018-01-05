@@ -84,6 +84,9 @@
           <property name="maximum">
            <double>100.000000000000000</double>
           </property>
+          <property name="value">
+           <double>0.100000000000000</double>
+          </property>
          </widget>
         </item>
         <item row="1" column="1">
@@ -93,6 +96,9 @@
           </property>
           <property name="maximum">
            <double>100.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -105,11 +111,17 @@
         </item>
         <item row="3" column="1">
          <widget class="QDoubleSpinBox" name="doubleSpinBox_mass">
+          <property name="decimals">
+           <number>3</number>
+          </property>
           <property name="minimum">
            <double>0.010000000000000</double>
           </property>
           <property name="maximum">
            <double>100.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>0.100000000000000</double>
           </property>
          </widget>
         </item>
@@ -127,6 +139,9 @@
           </property>
           <property name="maximum">
            <double>100.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>5.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -148,6 +163,9 @@
           <property name="singleStep">
            <double>0.010000000000000</double>
           </property>
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
          </widget>
         </item>
         <item row="5" column="0">
@@ -168,7 +186,20 @@
           <property name="singleStep">
            <double>0.001000000000000</double>
           </property>
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
          </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Bounce elasticity</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_bounce"/>
         </item>
        </layout>
       </item>
@@ -227,6 +258,33 @@
        <widget class="QCheckBox" name="checkBox_jelly">
         <property name="text">
          <string>Draw Jelly lines</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_cuboid">
+        <property name="text">
+         <string>Draw bounding Cuboid</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_bezier">
+        <property name="text">
+         <string>Draw Bezier Cube</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_model">
+        <property name="text">
+         <string>Draw loaded model</string>
         </property>
         <property name="checked">
          <bool>true</bool>

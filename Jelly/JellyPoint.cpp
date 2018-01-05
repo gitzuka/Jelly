@@ -19,6 +19,11 @@ void JellyPoint::updatePosition(const QVector3D &position)
 	m_position += position;
 }
 
+void JellyPoint::setPosition(const QVector3D& position)
+{
+	m_position = position;
+}
+
 void JellyPoint::setMass(float mass)
 {
 	m_mass = mass;

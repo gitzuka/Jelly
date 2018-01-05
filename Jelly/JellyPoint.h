@@ -9,6 +9,7 @@ public:
 	~JellyPoint();
 
 	void updatePosition(const QVector3D &position);
+	void setPosition(const QVector3D &position);
 	void setMass(float mass);
 	void setVelocity(QVector3D velocity);
 	void addForce(const QVector3D &force);

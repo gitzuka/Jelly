@@ -19,6 +19,9 @@ public:
 	const std::vector<JellyPoint>& getJellyPoints() const;
 	void startSimulation();
 	QVector<QVector3D> getJellyPointsPositions() const;
+	void setBoundingX(const QVector2D boundingX);
+	void setBoundingY(const QVector2D boundingY);
+	void setBoundingZ(const QVector2D boundingZ);
 
 private:
 	Physics m_physics;
@@ -50,4 +53,5 @@ private slots:
 	void updateFramePosition(std::shared_ptr<CubeFrame> cubeFrame);
 	void setVelocitiesRange(double velocitiesRange);
 	void setPositionsRange(double positionsRange);
+	void setBounceFactor(double bounceFactor);
 };

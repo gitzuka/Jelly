@@ -2,7 +2,7 @@
 #include <random>
 
 Jelly::Jelly() 
-	: m_velocitiesRange(0), m_positionsRange(0), m_physicsStep(5), m_drawStep(30), 
+	: m_velocitiesRange(1.0f), m_positionsRange(1.0f), m_physicsStep(5), m_drawStep(30), 
 	m_timerPhysics(new QTimer(this)), m_timerDraw(new QTimer(this)), m_simulate(false)
 {
 }
@@ -66,9 +66,13 @@ void Jelly::updatePhysics()
 		jellyIt->addForce(force);
 		QVector3D velocity = m_physics.calculateVelocity(*jellyIt);
 		jellyIt->addVeloctiy(velocity);
+		//velocity = m_physics.calculateBounces(*jellyIt);
+		m_physics.calculateBounces(*jellyIt);
+		//jellyIt->setVelocity(velocity);
 		QVector3D position = m_physics.calculatePosition(*jellyIt);
 		jellyIt->updatePosition(position);
 	}
+
 }
 
 void Jelly::updateFramePosition(std::shared_ptr<CubeFrame> cubeFrame)
@@ -93,6 +97,11 @@ void Jelly::setPositionsRange(double positionsRange)
 	m_positionsRange = positionsRange;
 }
 
+void Jelly::setBounceFactor(double bounceFactor)
+{
+	m_physics.setBounceFactor(bounceFactor);
+}
+
 void Jelly::resetForces()
 {
 	for (std::vector<JellyPoint>::iterator it = m_jellyPoints.begin(); it != m_jellyPoints.end(); ++it)
@@ -110,6 +119,21 @@ QVector<QVector3D> Jelly::getJellyPointsPositions() const
 		positions.push_back(it->getPosition());
 	}
 	return positions;
+}
+
+void Jelly::setBoundingX(const QVector2D boundingX)
+{
+	m_physics.setBoundingX(boundingX);
+}
+
+void Jelly::setBoundingY(const QVector2D boundingY)
+{
+	m_physics.setBoundingY(boundingY);
+}
+
+void Jelly::setBoundingZ(const QVector2D boundingZ)
+{
+	m_physics.setBoundingZ(boundingZ);
 }
 
 void Jelly::setk(double k)

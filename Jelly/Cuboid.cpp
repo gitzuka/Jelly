@@ -5,6 +5,7 @@ Cuboid::Cuboid(GLenum drawMode, int index, float edgeLength)
 {
 	Cuboid::generateVertices();
 	Cuboid::generateIndices();
+	setBoundings();
 }
 
 Cuboid::~Cuboid()

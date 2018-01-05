@@ -169,7 +169,9 @@ void Graphics::draw(const QMatrix4x4 &projView)
 			++i;
 			continue;
 		}
+		m_program->setUniformValue(m_program->uniformLocation("model"), projView * (*it)->getModelMatrix());
 		m_program->setUniformValue(m_program->uniformLocation("MVP"), projView * (*it)->getModelMatrix());
+		//m_program->setUniformValue(m_program->uniformLocation("MVP"), projView * (*it)->getModelMatrix());
 		m_vao.bind();
 		m_vbos.at(i).bind();
 		m_ibos.at(i).bind();

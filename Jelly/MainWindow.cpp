@@ -32,6 +32,7 @@ void MainWindow::connectUi()
 	connect(ui.doubleSpinBox_mass, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setMasses(double)));
 	connect(ui.doubleSpinBox_VRange, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setVelocitiesRange(double)));
 	connect(ui.doubleSpinBox_PosRange, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setPositionsRange(double)));
+	connect(ui.doubleSpinBox_bounce, SIGNAL(valueChanged(double)), &m_scene.getJelly(), SLOT(setBounceFactor(double)));
 	connect(ui.pushButton_randomV, SIGNAL(clicked()), &m_scene.getJelly(), SLOT(randomVelocities()));
 	connect(ui.pushButton_randomPos, SIGNAL(clicked()), &m_scene.getJelly(), SLOT(randomVelocities()));
 	connect(this, SIGNAL(cursorCheckboxToggled(int)), &m_scene, SLOT(setCursorDrawState(int)));

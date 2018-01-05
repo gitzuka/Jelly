@@ -14,10 +14,10 @@ public:
 	QVector3D setPosition(float mouseX, float mouseY, bool z, float width, float heigth, const Camera &viewMat);
 	void rotate(float pitch, float yaw);
 	QVector3D getPosition() const;
+	float m_mousePosX;
+	float m_mousePosY;
 
 private:
 	QVector3D m_position;
-	float m_mousePosX;
-	float m_mousePosY;
 	float m_length;
 };

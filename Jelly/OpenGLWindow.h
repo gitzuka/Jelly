@@ -28,6 +28,8 @@ protected:
 
 private:
 	Renderer *m_renderer;
+	float m_dx;
+	float m_dy;
 
 private slots:
 	void setCursorState(int checked);
