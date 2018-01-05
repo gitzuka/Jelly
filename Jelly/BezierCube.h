@@ -5,6 +5,7 @@ class BezierCube : public Mesh
 {
 public:
 	BezierCube(GLenum drawMode, int index, int divisions, QVector3D color);
+	BezierCube(const QVector<Vertex>& vertices, const QVector<GLushort>& indices, GLenum drawMode, int index, QVector3D color);
 	~BezierCube();
 
 	void generateVertices() override;

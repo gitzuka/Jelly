@@ -2,6 +2,7 @@
 #include "Cursor3D.h"
 #include "Point3D.h"
 #include "BezierCube.h"
+#include "ModelLoader.h"
 
 Scene::Scene() : m_jellyIndex(-1), m_frameIndex(-1), m_cursorIndex(-1), m_drawPoints(true)
 {
@@ -37,11 +38,48 @@ void Scene::initializeScene()
 	std::shared_ptr<BezierCube> bezierCube = std::make_shared<BezierCube>(GL_TRIANGLES, m_renderer.getGraphics(1)->getMeshes().count(), 32, QVector3D(1,0,1));
 	m_renderer.getGraphics(1)->addMesh(bezierCube, QOpenGLBuffer::StaticDraw);
 
-	//QOpenGLShaderProgram *program = m_renderer.getGraphics(1)->getProgram();
-	//program->bind();
-	////program->setUniformValueArray(program->uniformLocation("points"), bezierCube->getPositions().constData(), 64);
-	//program->setUniformValueArray(program->uniformLocation("points"), m_jelly.getJellyPointsPositions().constData(), 64);
-	//program->release();
+	//ModelLoader model;
+
+	//if (!model.Load("C:/Users/Andrzej/Documents/Visual Studio 2015/Projects/Jelly/Jelly/Resources/WusonOBJ.obj", ModelLoader::PathType::AbsolutePath))
+	//{
+	//	//m_error = true;
+	//	return;
+	//}
+	//QVector<float> *vertices;
+	//
+	//QVector<float> *normals;
+	//QVector<unsigned int> *indices;
+
+	//model.getBufferData(&vertices, &normals, &indices);
+	//QVector<QVector3D> positions;
+	//positions.reserve(vertices->count()/3);
+	//for (int i = 0; i<vertices->count(); i += 3)
+	//{
+	//	positions.push_back(QVector3D((vertices->at(i)) * 0.3f + 0.5f, (vertices->at(i + 1)) * 0.3f + 0.3f, (vertices->at(i + 2))* 0.3f + 0.5f));
+	//	//positions.push_back(QVector3D(vertices->at(i), vertices->at(i + 1), vertices->at(i + 2)));
+	//}
+	//QVector<QVector3D> vecnormals;
+	//vecnormals.reserve(normals->count() / 3);
+	//for (int i = 0; i<normals->count(); i += 3)
+	//{
+	//	vecnormals.push_back(QVector3D(normals->at(i), normals->at(i + 1), normals->at(i + 2)));
+	//}
+	//QVector<GLushort> vecindices;
+	//vecindices.reserve(indices->count());
+	//for (int i = 0; i<indices->count(); ++i)
+	//{
+	//	vecindices.push_back(indices->at(i));
+	//}
+	//QVector<Vertex> vertexes;
+	//vertexes.reserve(positions.count());
+	//for (int i =0; i< positions.count(); ++i)
+	//{
+	//	vertexes.push_back(Vertex(positions.at(i), QVector3D(1, 0, 1), vecnormals.at(i)));
+	//}
+	//std::shared_ptr<BezierCube> bezierCube = std::make_shared<BezierCube>(vertexes, vecindices, GL_TRIANGLES, m_renderer.getGraphics(1)->getMeshes().count(), QVector3D(1, 0, 1));
+	//m_renderer.getGraphics(1)->addMesh(bezierCube, QOpenGLBuffer::StaticDraw);
+	//QSharedPointer<Node> m_rootNode = model.getNodeData();
+	//m_local = m_rootNode->transformation * m_rootNode->nodes.at(0).transformation;
 }
 
 void Scene::draw()
@@ -59,7 +97,16 @@ void Scene::draw()
 	program->release();*/
 	QOpenGLShaderProgram *program = m_renderer.getGraphics(1)->getProgram();
 	program->bind();
+	program->setUniformValue("light.position", QVector4D(100.0f, 100.0f, 100.0f, 1.0f));
+	program->setUniformValue("light.intensity", QVector3D(1.0f, 1.0f, 1.0f));
 	program->setUniformValueArray(program->uniformLocation("points"), m_jelly.getJellyPointsPositions().constData(), 64);
+	program->setUniformValue(program->uniformLocation("MV"), m_renderer.getCamera().m_viewMatrix * m_renderer.getGraphics(1)->getMeshes().at(0)->getModelMatrix());
+	//program->setUniformValue(program->uniformLocation("u_LightPos"), QVector3D(0, 0, 100));
+	program->setUniformValue(program->uniformLocation("N"), (m_renderer.getCamera().m_viewMatrix * m_renderer.getGraphics(1)->getMeshes().at(0)->getModelMatrix()).normalMatrix());
+	program->setUniformValue("material.Ka", QVector3D(0.05f, 0.2f, 0.05f));
+	program->setUniformValue("material.Kd", QVector3D(0.3f, 0.5f, 0.3f));
+	program->setUniformValue("material.Ks", QVector3D(0.6f, 0.6f, 0.6f));
+	program->setUniformValue("material.shininess", 50.f);
 	program->release();
 	m_renderer.getGraphics(0)->updateJellyData(m_jellyIndex, m_jelly.getJellyPoints());
 	if (m_drawPoints)
@@ -118,6 +165,18 @@ void Scene::setFrameDrawState(int draw)
 void Scene::setJellyDrawState(int draw)
 {
 	m_renderer.getGraphics(0)->setDrawState(draw, m_jellyIndex);
+}
+
+void Scene::setBezierDrawState(int draw)
+{
+}
+
+void Scene::setCuboidDrawState(int draw)
+{
+}
+
+void Scene::setModelDrawState(int draw)
+{
 }
 
 void Scene::rotateFrame(float pitch, float yaw)

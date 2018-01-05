@@ -40,7 +40,9 @@ void MainWindow::connectUi()
 	connect(ui.checkBox_frame, SIGNAL(stateChanged(int)), &m_scene, SLOT(setFrameDrawState(int)));
 	connect(ui.checkBox_jelly, SIGNAL(stateChanged(int)), &m_scene, SLOT(setJellyDrawState(int)));
 	connect(ui.checkBox_cursor, SIGNAL(stateChanged(int)), ui.openGLWidget, SLOT(setCursorState(int)));
-	connect(ui.checkBox_cursor, SIGNAL(stateChanged(int)), &m_scene, SLOT(setCursorDrawState(int)));
+	connect(ui.checkBox_cuboid, SIGNAL(stateChanged(int)), &m_scene, SLOT(setCuboidDrawState(int)));
+	connect(ui.checkBox_bezier, SIGNAL(stateChanged(int)), &m_scene, SLOT(setBezierDrawState(int)));
+	connect(ui.checkBox_model, SIGNAL(stateChanged(int)), &m_scene, SLOT(setModelDrawState(int)));
 
 	connect(ui.openGLWidget, SIGNAL(initializedGL()), &m_scene, SLOT(initializeScene()));
 	connect(ui.openGLWidget, SIGNAL(paintedGL()), &m_scene, SLOT(draw()));

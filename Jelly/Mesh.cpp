@@ -1,14 +1,19 @@
 #include "Mesh.h"
 
-Mesh::Mesh(int index) : m_index(index)
-{
-}
+//Mesh::Mesh(int index) : m_index(index)
+//{
+//}
 
 Mesh::Mesh(GLenum drawMode, int index) : m_drawMode(drawMode), m_index(index)
 {
 }
 
-Mesh::Mesh(const QVector<Vertex>& vertices, GLenum drawMode, int index) : m_vertices(vertices), m_drawMode(drawMode), m_index(index)
+//Mesh::Mesh(const QVector<Vertex>& vertices, GLenum drawMode, int index) : m_vertices(vertices), m_drawMode(drawMode), m_index(index)
+//{
+//}
+
+Mesh::Mesh(const QVector<Vertex>& vertices, const QVector<GLushort>& indices, GLenum drawMode, int index)
+	: m_vertices(vertices), m_indices(indices), m_drawMode(drawMode), m_index(index)
 {
 }
 

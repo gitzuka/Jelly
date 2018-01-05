@@ -35,7 +35,7 @@ void OpenGLWindow::initializeGL()
 
 	QOpenGLShaderProgram *programBezier = new QOpenGLShaderProgram();
 	programBezier->addShaderFromSourceFile(QOpenGLShader::Vertex, "C:/Users/Andrzej/Documents/Visual Studio 2015/Projects/Jelly/Jelly/bezierObject.vert");
-	programBezier->addShaderFromSourceFile(QOpenGLShader::Fragment, "C:/Users/Andrzej/Documents/Visual Studio 2015/Projects/Jelly/Jelly/linesObject.frag");
+	programBezier->addShaderFromSourceFile(QOpenGLShader::Fragment, "C:/Users/Andrzej/Documents/Visual Studio 2015/Projects/Jelly/Jelly/bezierObject.frag");
 	programBezier->link();
 
 	std::shared_ptr<Graphics> bezierGraphics = std::make_shared<Graphics>(programBezier);

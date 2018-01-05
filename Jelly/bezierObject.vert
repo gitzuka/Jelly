@@ -1,12 +1,18 @@
 #version 330 core
 // shadertype=<glsl>
 layout(location = 0) in vec3 position;
-layout(location = 2) in vec3 color;
+layout(location = 1) in vec3 color;
+layout(location = 2) in vec3 normal;
 uniform mat4 MVP;
+uniform mat4 MV;
+uniform mat3 N;
+//uniform vec3 lightPos;
 uniform vec3 points[64];
-out vec4 vColor;
-//uniform vec3 position[64]
+//out vec4 v_Color;
+out vec3 v_Normal;
+out vec3 v_Position;
 
+//out vec4 vColor;
 
 vec3 deCasteljau(float t, vec3 a, vec3 b, vec3 c, vec3 d)
 {
@@ -23,8 +29,6 @@ vec3 deCasteljau(float t, vec3 a, vec3 b, vec3 c, vec3 d)
 
 	return a;
 }
-
-
 
 vec3 surfaceCalc(vec3 positionUVW)
 {
@@ -57,8 +61,14 @@ vec3 surfaceCalc(vec3 positionUVW)
 
 void main()
 {
-    //gl_PointSize = 4;
-    gl_Position = MVP * vec4(surfaceCalc(position), 1.0);
-    //gl_Position = vec4(position, 1.0);
-	vColor = vec4(color, 1.0);
+    v_Normal = normalize( N * normal );
+    v_Position = vec3( MV * vec4( surfaceCalc(position), 1.0 ) );
+    gl_Position = MVP * vec4( surfaceCalc(position), 1.0 );
+	//v_Position = vec3(MV * vec4(v_Position, 1.0));
+ //   v_Color =vec4( color, 1.0);
+ //   v_Normal = vec3(MV * vec4(normal, 0.0));
+
+
+    //gl_Position = MVP * vec4(surfaceCalc(position), 1.0);
+	//vColor = vec4(color, 1.0);
 }

@@ -79,7 +79,6 @@ void CubeFrame::generateIndices()
 	m_indices.append(5);
 	m_indices.append(3);
 	m_indices.append(7);
-
 }
 
 void CubeFrame::setEdgeLength(float edgeLength)

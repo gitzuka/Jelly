@@ -13,7 +13,6 @@ QVector3D Physics::calculateSpringsForce(const Spring &spring, float c) const
 {
 	float l = spring.getInitialLength() - spring.getCurrLength();
 	QVector3D direction = getDirectionVec(spring.getPoint(true).getPosition(), spring.getPoint(false).getPosition()).normalized();
-	//return QVector3D(-m_c1 * l * direction);
 	return QVector3D(-c * l * direction);
 }
 
