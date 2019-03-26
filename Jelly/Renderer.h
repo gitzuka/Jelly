@@ -9,10 +9,10 @@ public:
 	Renderer();
 	~Renderer();
 
-	void initBuffers();
 	void addGraphicComponent(std::shared_ptr<Graphics> graphics);
 	std::shared_ptr<Graphics> getGraphics(int index);
 	void draw();
+	//void draw(Camera &camera);
 	Camera& getCamera();
 
 private:

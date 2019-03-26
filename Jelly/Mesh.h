@@ -7,10 +7,7 @@
 class Mesh
 {
 public:
-	//explicit Mesh(int index);
-	//Mesh(const QVector<Vertex> &vertices, GLenum drawMode, int index);
 	Mesh(const QVector<Vertex>& vertices, const QVector<GLushort>& indices, GLenum drawMode, int index);
-	//Mesh(const QVector<QVector3D> &positions, const QVector<QVector3D> &normals, const QVector<GLushort> &indices, GLenum drawMode, int index);
 	Mesh(GLenum drawMode, int index);
 	virtual ~Mesh() = 0;
 

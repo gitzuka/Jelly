@@ -14,9 +14,6 @@ public:
 	explicit Graphics(QOpenGLShaderProgram *program);
 	virtual ~Graphics();
 
-	//Graphics(const Graphics&);
-	//Graphics &Graphics::operator=(const Graphics&);
-
 	void initBuffers();
 	void initBuffer(QOpenGLBuffer *vertBuffer, QOpenGLBuffer *indexBuffer, QOpenGLBuffer::UsagePattern bufferUsage, std::shared_ptr<Mesh> mesh);
 	void initBuffer(int bufferIndex, QOpenGLBuffer::UsagePattern bufferUsage);

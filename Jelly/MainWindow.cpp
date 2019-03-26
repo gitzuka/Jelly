@@ -1,5 +1,7 @@
 #include "MainWindow.h"
 
+//TODO: poprawienie cieni, restrukturezacja kodu, wczytywanie plikow, kursor 3d, odbicia
+
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -49,13 +51,10 @@ void MainWindow::connectUi()
 	connect(ui.openGLWidget, SIGNAL(paintedGL()), &m_scene, SLOT(draw()));
 	connect(ui.openGLWidget, SIGNAL(leftMouseClicked(float, float, bool, float, float, bool)), &m_scene, SLOT(moveFrame(float, float, bool, float, float, bool)));
 	connect(ui.openGLWidget, SIGNAL(initRotation(float, float)), &m_scene, SLOT(rotateFrame(float, float)));
-	connect(ui.openGLWidget, SIGNAL(paintedGL()), &m_scene, SLOT(draw()));
 
-	//connect(&m_scene.getJelly(), SIGNAL(simulationUpdated(int)), &m_scene, SLOT(draw(int)));
 	connect(&m_scene, SIGNAL(frameMoved(std::shared_ptr<CubeFrame>)), &m_scene.getJelly(), SLOT(updateFramePosition(std::shared_ptr<CubeFrame>)));
 	connect(&m_scene, SIGNAL(cursorPosUpdated(const QVector3D&)), this, SLOT(updateCursorLabel(const QVector3D&)));
 	connect(m_scene.getJelly().getPhysicsTimer(), SIGNAL(timeout()), &m_scene.getJelly(), SLOT(updatePhysics()));
-	//connect(m_scene.getJelly().getDrawTimer(), SIGNAL(timeout()), &m_scene, SLOT(draw()));
 	connect(m_scene.getJelly().getDrawTimer(), SIGNAL(timeout()), ui.openGLWidget, SLOT(update()));
 
 	connect(this, SIGNAL(qKeyPressed()), this, SLOT(toggleCursorCheckobx()));

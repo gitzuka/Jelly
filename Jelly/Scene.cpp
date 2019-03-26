@@ -17,9 +17,8 @@ void Scene::loadModel()
 {
 	ModelLoader model;
 
-	if (!model.Load("C:/Users/Andrzej/Documents/Visual Studio 2015/Projects/Jelly/Jelly/Resources/WusonOBJ.obj", ModelLoader::PathType::AbsolutePath))
+	if (!model.Load("C:/Users/Andrzej/Documents/vs2015/Projects/Jelly/Jelly/Resources/WusonOBJ.obj", ModelLoader::PathType::AbsolutePath))
 	{
-		//m_error = true;
 		return;
 	}
 	QVector<float> *vertices;
@@ -33,7 +32,6 @@ void Scene::loadModel()
 	for (int i = 0; i<vertices->count(); i += 3)
 	{
 		positions.push_back(QVector3D((vertices->at(i)) * 0.3f + 0.5f, (vertices->at(i + 1)) * 0.3f + 0.3f, (vertices->at(i + 2))* 0.3f + 0.5f));
-		//positions.push_back(QVector3D(vertices->at(i), vertices->at(i + 1), vertices->at(i + 2)));
 	}
 	QVector<QVector3D> vecnormals;
 	vecnormals.reserve(normals->count() / 3);
@@ -55,9 +53,7 @@ void Scene::loadModel()
 	}
 	std::shared_ptr<BezierCube> bezierModel = std::make_shared<BezierCube>(vertexes, vecindices, GL_TRIANGLES, m_renderer.getGraphics(1)->getMeshes().count(), QVector3D(1, 0, 1));
 	m_renderer.getGraphics(1)->addMesh(bezierModel, QOpenGLBuffer::StaticDraw);
-	//QSharedPointer<Node> m_rootNode = model.getNodeData();
 	m_modelIndex = m_renderer.getGraphics(1)->getMeshes().count() - 1;
-	//m_local = m_rootNode->transformation * m_rootNode->nodes.at(0).transformation;
 }
 
 void Scene::initializeScene()
@@ -73,24 +69,22 @@ void Scene::initializeScene()
 	m_renderer.getGraphics(0)->addMesh(cursor3D, QOpenGLBuffer::StaticDraw);
 	m_cursorIndex = m_renderer.getGraphics(0)->getMeshes().count() - 1;
 
-	//QVector<QVector3D> positions;
-	//positions.reserve(64);
 	for (std::vector<JellyPoint>::const_iterator it = m_jelly.getJellyPoints().begin(); it != m_jelly.getJellyPoints().end(); ++it)
 	{
-		//QVector3D position = it->getPosition();
-		//positions.push_back(position);
 		m_renderer.getGraphics(0)->addMesh(std::make_shared<Point3D>(GL_LINES, m_renderer.getGraphics(0)->getMeshes().count()), QOpenGLBuffer::StaticDraw);
 		m_renderer.getGraphics(0)->getMeshes().at(m_renderer.getGraphics(0)->getMeshes().count() - 1)->setModelMatrix(Camera::createTranslation(it->getPosition()));
 	}
 
-	std::shared_ptr<Cuboid> cuboid = std::make_shared<Cuboid>(GL_LINES, m_renderer.getGraphics(0)->getMeshes().count(), 8.0f);
+	float size = 8.0f;
+	std::shared_ptr<Cuboid> cuboid = std::make_shared<Cuboid>(GL_LINES, m_renderer.getGraphics(0)->getMeshes().count(), size);
 	m_renderer.getGraphics(0)->addMesh(cuboid, QOpenGLBuffer::StaticDraw);
 	m_cuboidIndex = m_renderer.getGraphics(0)->getMeshes().count() - 1;
 	m_jelly.setBoundingX(cuboid->getBoundingX());
 	m_jelly.setBoundingY(cuboid->getBoundingY());
 	m_jelly.setBoundingZ(cuboid->getBoundingZ());
 
-	std::shared_ptr<BezierCube> bezierCube = std::make_shared<BezierCube>(GL_TRIANGLES, m_renderer.getGraphics(1)->getMeshes().count(), 32, QVector3D(1,0,1));
+	int div = 32;
+	std::shared_ptr<BezierCube> bezierCube = std::make_shared<BezierCube>(GL_TRIANGLES, m_renderer.getGraphics(1)->getMeshes().count(), div, QVector3D(1,0,1));
 	m_renderer.getGraphics(1)->addMesh(bezierCube, QOpenGLBuffer::StaticDraw);
 	m_bezierIndex = m_renderer.getGraphics(1)->getMeshes().count() - 1;
 	m_renderer.getGraphics(1)->setDrawState(false, m_bezierIndex);
@@ -98,7 +92,6 @@ void Scene::initializeScene()
 	loadModel();
 	QOpenGLShaderProgram *program = m_renderer.getGraphics(1)->getProgram();
 	program->bind();
-	//program->setUniformValue("light.position", QVector4D(.0f, -10.0f, 0.0f, 1.0f));
 	program->setUniformValue("lightPos", QVector3D(0.0f, -10.0f, 0.0f));
 	program->setUniformValue("lightColor", QVector3D(1.0f, 1.0f, 1.0f));
 	program->setUniformValue("objectColor", QVector3D(1.0f, 0.0f, 1.0f));
@@ -114,9 +107,8 @@ void Scene::draw()
 {
 	QOpenGLShaderProgram *program = m_renderer.getGraphics(1)->getProgram();
 	program->bind();
-	program->setUniformValueArray(program->uniformLocation("points"), m_jelly.getJellyPointsPositions().constData(), 64);
-	//program->setUniformValue(program->uniformLocation("MV"), m_renderer.getCamera().m_viewMatrix * m_renderer.getGraphics(1)->getMeshes().at(0)->getModelMatrix());
-	//program->setUniformValue(program->uniformLocation("N"), (m_renderer.getCamera().m_viewMatrix * m_renderer.getGraphics(1)->getMeshes().at(0)->getModelMatrix()).normalMatrix());
+	program->setUniformValueArray(program->uniformLocation("points"), m_jelly.getJellyPointsPositions().constData(), m_jelly.getJellyPointsPositions().size());
+	program->setUniformValueArray(program->uniformLocation("normal"), m_jelly.getJellyPointsPositions().constData(), 64);
 	program->setUniformValue(program->uniformLocation("view"), m_renderer.getCamera().m_viewMatrix);
 	program->setUniformValue(program->uniformLocation("projection"), m_renderer.getCamera().m_projectionMatrix);
 	program->release();
@@ -135,10 +127,8 @@ void Scene::moveFrame(float x, float y, bool z, float width, float height, bool 
 	if (mouseClicked)
 	{
 		std::dynamic_pointer_cast<CubeFrame>(m_renderer.getGraphics(0)->getMeshes().at(m_frameIndex))->moveFrame(m_renderer.getGraphics(0)->getMeshes().at(m_cursorIndex)->getModelMatrix(), m_renderer.getCamera());
-		//m_renderer.getGraphics(0)->getMeshes().at(m_frameIndex)->setModelMatrix(m_renderer.getGraphics(0)->getMeshes().at(m_cursorIndex)->getModelMatrix());
 		emit frameMoved(std::dynamic_pointer_cast<CubeFrame>(m_renderer.getGraphics(0)->getMeshes().at(m_frameIndex)));
 	}
-	//emit cursorPosUpdated(std::dynamic_pointer_cast<Cursor3D>(m_renderer.getGraphics(0)->getMeshes().at(m_cursorIndex))->getPosition());
 	emit cursorPosUpdated(pos);
 }
 

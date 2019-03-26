@@ -69,7 +69,7 @@ QVector3D Physics::calculateVelocity(const JellyPoint &point) const
 
 QVector3D Physics::calculateBounces(JellyPoint &point) const
 {
-	float delta = 0.000000001f;
+	float delta = 0.0001f;
 	//QVector3D pos;
 	QVector3D pos;// = calculateElasticBounce(point);
 	m_bounceElasticity < delta ? pos = calculateNonElasticBounce(point) : pos = calculateElasticBounce(point);
@@ -147,8 +147,8 @@ QVector3D Physics::calculateElasticBounce(JellyPoint& point) const
 	QVector3D velocity;// = point.getVelocity();
 	QVector3D pos;// = point.getPosition();
 	int i = 0;
-	while ((point.getPosition().x() + calculatePosition(point).x() >= m_boundingX.y() || point.getPosition().x() + calculatePosition(point).x() <= m_boundingX.x()) && i < m_maxStep)
-		//if (point.getPosition().x() + calculatePosition(point).x() >= m_boundingX.y() || point.getPosition().x() + calculatePosition(point).x() <= m_boundingX.x())
+	while ((point.getPosition().x() + calculatePosition(point).x() > m_boundingX.y() || point.getPosition().x() + calculatePosition(point).x() < m_boundingX.x()) && i < m_maxStep)
+	//	if (point.getPosition().x() + calculatePosition(point).x() >= m_boundingX.y() || point.getPosition().x() + calculatePosition(point).x() <= m_boundingX.x())
 	{
 		pos = calculatePosition(point);
 		pos.setX(-pos.x());
@@ -192,7 +192,7 @@ QVector3D Physics::calculateNonElasticBounce(JellyPoint& point) const
 	while (point.getPosition().x() > m_boundingX.y() && i<m_maxStep)
 	{
 		pos = point.getPosition();
-		pos = point.getPosition();pos.setX(m_boundingX.y() - delta);
+		pos.setX(m_boundingX.y() - delta);
 		point.setPosition(pos);
 		velocity.setX(-velocity.x() * m_bounceElasticity);
 		++i;

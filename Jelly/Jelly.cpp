@@ -121,17 +121,17 @@ QVector<QVector3D> Jelly::getJellyPointsPositions() const
 	return positions;
 }
 
-void Jelly::setBoundingX(const QVector2D boundingX)
+void Jelly::setBoundingX(const QVector2D &boundingX)
 {
 	m_physics.setBoundingX(boundingX);
 }
 
-void Jelly::setBoundingY(const QVector2D boundingY)
+void Jelly::setBoundingY(const QVector2D &boundingY)
 {
 	m_physics.setBoundingY(boundingY);
 }
 
-void Jelly::setBoundingZ(const QVector2D boundingZ)
+void Jelly::setBoundingZ(const QVector2D &boundingZ)
 {
 	m_physics.setBoundingZ(boundingZ);
 }
@@ -154,10 +154,6 @@ void Jelly::setc2(double c2)
 void Jelly::setMasses(double mass)
 {
 	m_physics.setMass(mass);
-	/*for (std::vector<JellyPoint>::iterator it = m_jellyPoints.begin(); it != m_jellyPoints.end(); ++it)
-	{
-		it->setMass(mass);
-	}*/
 }
 
 void Jelly::randomVelocities()

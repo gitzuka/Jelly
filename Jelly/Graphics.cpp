@@ -62,13 +62,11 @@ void Graphics::initBuffer(QOpenGLBuffer* vertBuffer, QOpenGLBuffer* indexBuffer,
 		m_vao.create();
 	}
 	m_vao.bind();
-	//*vertBuffer = QOpenGLBuffer();
 	vertBuffer->create();
 	vertBuffer->bind();
 	vertBuffer->setUsagePattern(bufferUsage);
 	vertBuffer->allocate(mesh->getVertices().constData(), mesh->getVertices().count() * sizeof(Vertex));
 
-	//m_ibos.push_back(QOpenGLBuffer(QOpenGLBuffer::IndexBuffer));
 	indexBuffer->create();
 	indexBuffer->bind();
 	indexBuffer->setUsagePattern(QOpenGLBuffer::StaticDraw);
@@ -86,7 +84,6 @@ void Graphics::initBuffer(QOpenGLBuffer* vertBuffer, QOpenGLBuffer* indexBuffer,
 
 void Graphics::initBuffer(int bufferIndex, QOpenGLBuffer::UsagePattern bufferUsage)
 {
-	//initBuffer(&m_vbos.at(bufferIndex), &m_ibos.at(bufferIndex), bufferUsage, m_meshes.at(bufferIndex));
 	m_program->bind();
 
 		if (!m_vao.isCreated())
@@ -119,7 +116,6 @@ void Graphics::initBuffer(int bufferIndex, QOpenGLBuffer::UsagePattern bufferUsa
 void Graphics::updateVertexBufferData(int offset, const Vertex *vertex, int bufferIndex, int count)
 {
 	m_vbos.at(bufferIndex).bind();
-	//m_vbos.at(bufferIndex).write(offset * sizeof(Vertex), vertex, sizeof(QVector3D));
 	m_vbos.at(bufferIndex).write(offset * sizeof(Vertex), vertex, sizeof(Vertex) * count);
 	m_vbos.at(bufferIndex).release();
 }
@@ -169,7 +165,8 @@ void Graphics::draw(const QMatrix4x4 &projView)
 			++i;
 			continue;
 		}
-		m_program->setUniformValue(m_program->uniformLocation("model"), projView * (*it)->getModelMatrix());
+		//m_program->setUniformValue(m_program->uniformLocation("model"), projView * (*it)->getModelMatrix());
+		m_program->setUniformValue(m_program->uniformLocation("model"), (*it)->getModelMatrix());
 		m_program->setUniformValue(m_program->uniformLocation("MVP"), projView * (*it)->getModelMatrix());
 		//m_program->setUniformValue(m_program->uniformLocation("MVP"), projView * (*it)->getModelMatrix());
 		m_vao.bind();
@@ -202,12 +199,4 @@ void Graphics::updateJellyData(int jellyIndex, const std::vector<JellyPoint>& po
 {
 	std::dynamic_pointer_cast<JellyCube>(m_meshes.at(jellyIndex))->updateVerticesPositions(positions);
 	updateVertexBufferData(0, m_meshes.at(jellyIndex)->getVertices(), jellyIndex);
-	/*Vertex *vertData = new Vertex[m_meshes.at(jellyIndex)->getVertices().count()];
-	int i = 0;
-	for (QVector<Vertex>::const_iterator it = m_meshes.at(jellyIndex)->getVertices().begin(); it != m_meshes.at(jellyIndex)->getVertices().end(); ++it)
-	{
-		vertData[i] = Vertex()
-	}
-	delete[] vertData;*/
-	
 }

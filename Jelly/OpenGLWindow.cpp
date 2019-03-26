@@ -26,8 +26,8 @@ void OpenGLWindow::initializeGL()
 	glCullFace(GL_BACK);
 
 	QOpenGLShaderProgram *program = new QOpenGLShaderProgram();
-	program->addShaderFromSourceFile(QOpenGLShader::Vertex, "C:/Users/Andrzej/Documents/Visual Studio 2015/Projects/Jelly/Jelly/linesObject.vert");
-	program->addShaderFromSourceFile(QOpenGLShader::Fragment, "C:/Users/Andrzej/Documents/Visual Studio 2015/Projects/Jelly/Jelly/linesObject.frag");
+	program->addShaderFromSourceFile(QOpenGLShader::Vertex, "C:/Users/Andrzej/Documents/vs2015/Projects/Jelly/Jelly/linesObject.vert");
+	program->addShaderFromSourceFile(QOpenGLShader::Fragment, "C:/Users/Andrzej/Documents/vs2015/Projects/Jelly/Jelly/linesObject.frag");
 	program->link();
 
 	std::shared_ptr<Graphics> lineGraphics = std::make_shared<Graphics>(program);
@@ -35,8 +35,8 @@ void OpenGLWindow::initializeGL()
 	m_renderer->addGraphicComponent(lineGraphics);
 
 	QOpenGLShaderProgram *programBezier = new QOpenGLShaderProgram();
-	programBezier->addShaderFromSourceFile(QOpenGLShader::Vertex, "C:/Users/Andrzej/Documents/Visual Studio 2015/Projects/Jelly/Jelly/bezierObject.vert");
-	programBezier->addShaderFromSourceFile(QOpenGLShader::Fragment, "C:/Users/Andrzej/Documents/Visual Studio 2015/Projects/Jelly/Jelly/bezierObject.frag");
+	programBezier->addShaderFromSourceFile(QOpenGLShader::Vertex, "C:/Users/Andrzej/Documents/vs2015/Projects/Jelly/Jelly/bezierObject.vert");
+	programBezier->addShaderFromSourceFile(QOpenGLShader::Fragment, "C:/Users/Andrzej/Documents/vs2015/Projects/Jelly/Jelly/bezierObject.frag");
 	programBezier->link();
 
 	std::shared_ptr<Graphics> bezierGraphics = std::make_shared<Graphics>(programBezier);
@@ -48,9 +48,7 @@ void OpenGLWindow::initializeGL()
 void OpenGLWindow::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	//emit leftMouseClicked(m_dx, m_dy, QGuiApplication::keyboardModifiers().testFlag(Qt::ControlModifier), this->width(), this->height(), false);
 	emit paintedGL();
-	//m_renderer->draw();
 }
 
 void OpenGLWindow::resizeGL(int width, int height)
@@ -63,7 +61,6 @@ void OpenGLWindow::resizeGL(int width, int height)
 void OpenGLWindow::mousePressEvent(QMouseEvent* event)
 {
 	m_renderer->getCamera().m_mousePos = event->pos();
-	//m_renderer->getCamera().m_mousePos.setX(event->pos().x() - this->width() / 2.0f);
 	if (event->buttons() & Qt::LeftButton)
 	{
 		emit leftMouseClicked(event->x(), event->y(), QGuiApplication::keyboardModifiers().testFlag(Qt::ControlModifier), this->width(), this->height(), true);
@@ -73,11 +70,8 @@ void OpenGLWindow::mousePressEvent(QMouseEvent* event)
 
 void OpenGLWindow::mouseMoveEvent(QMouseEvent* event)
 {
-	//float x = event->x() - this->width() / 2.0f;
 	float dx = event->x() - m_renderer->getCamera().m_mousePos.x();
 	float dy = event->y() - m_renderer->getCamera().m_mousePos.y();
-	//m_dx = event->x();
-	//m_dy = event->y();
 	m_renderer->getCamera().m_mousePos = event->pos();
 	if (event->buttons() & Qt::RightButton)
 	{
@@ -92,34 +86,12 @@ void OpenGLWindow::mouseMoveEvent(QMouseEvent* event)
 		return;
 	}
 	emit leftMouseClicked(event->x(), event->y(), QGuiApplication::keyboardModifiers().testFlag(Qt::ControlModifier), this->width(), this->height(), false);
-
-	//this->update();
-	//float x = event->x() - this->width() / 2.0f;
-	//float dx = x - m_renderer->getCamera().m_mousePos.x();
-	//float dy = event->y() - m_renderer->getCamera().m_mousePos.y();
-	//if (event->buttons() & Qt::RightButton)
-	//{
-	//	m_renderer->getCamera().mouseMoved(dx + this->width() / 2.0f, dy);
-	//}
-	//emit leftMouseClicked(dx, dy, QGuiApplication::keyboardModifiers().testFlag(Qt::ControlModifier), this->width(), this->height(), false);
-
-	////m_renderer->getCamera().m_mousePos = event->pos();
-	//m_renderer->getCamera().m_mousePos.setX(x);
-	////this->update();
 }
 
 void OpenGLWindow::keyPressEvent(QKeyEvent *event)
 {
 	m_renderer->getCamera().keyPressed(event->key());
 	emit keyPressed(event);
-	/*switch (event->key())
-	{
-	case 'T':
-	{
-		emit initRotation(0, 45.0f);
-		break;
-	}
-	}*/
 	this->update();
 }
 

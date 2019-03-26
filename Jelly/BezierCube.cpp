@@ -23,20 +23,7 @@ void BezierCube::generateVertices()
 	m_vertices.reserve(m_divisions * m_divisions * m_divisions);
 	float edgeLength = 1.0f;
 	float distance = 1.0f / (m_divisions - 1) * edgeLength;
-	//for (int z = 0; z < m_divisions; ++z)
-	//{
-	//	float az = distance * z;
-	//	for (int y = 0; y < m_divisions; ++y)
-	//	{
-	//		float ay = distance * y;
-	//		for (int x = 0; x < m_divisions; ++x)
-	//		{
-	//			float ax = distance * x;
-	//			m_vertices.push_back(Vertex(QVector3D(ax, ay, az), m_color, QVector3D()));
-	//		}
-	//	}
-	//}
-	///////////////
+
 	for (int z = 0; z <= m_divisions; z += m_divisions - 1)
 	{
 		float az = distance * z;
@@ -91,116 +78,89 @@ void BezierCube::generateVertices()
 			}
 		}
 	}
-
-	//for (int z = 0; z < m_divisions; ++z)
-	//{
-	//	float az = distance * z;
-	//	for (int y = 0; y < m_divisions; ++y)
-	//	{
-	//		float ay = distance * y;
-	//		for (int x = 0; x <= m_divisions; x+=m_divisions-1)
-	//		{
-	//			float ax = distance * x;
-	//			m_vertices.push_back(Vertex(QVector3D(ax, ay, az), m_color, QVector3D()));
-	//		}
-	//	}
-	//}
 }
 
 void BezierCube::generateIndices()
 {
-	//for (int i =0; i<m_vertices.count(); ++i)
-	//{
-	//	m_indices.push_back(i);
-
-	//	//m_indices.push_back(i + 1);
-	//}
-	//m_indices.reserve(m_vertices.count() * 2);
-	//m_indices.reserve(m_vertices.count() * 3);
-	//for (int i =0; i<m_vertices.count(); ++i)
-	//{
-	//	m_indices.push_back(i);
-	//	m_indices.push_back(i + 1);
-	//	m_indices.push_back(i + 32);
-	//	m_indices.push_back(i + 1);
-	//	m_indices.push_back(i + 33);
-	//	m_indices.push_back(i + 32);
-
-	//	//m_indices.push_back(i + 1);
-	//}
-	////
-	for (int j = 0; j < 32 * 31; j+=32)
+	for (int j = 0; j < m_divisions * (m_divisions - 1); j+=m_divisions)
 	{
-		for (int i = 0; i < 31; ++i)
+		for (int i = 0; i < (m_divisions - 1); ++i)
 		{
 			m_indices.push_back(j + i);
 			m_indices.push_back(j + i + 1);
-			m_indices.push_back(j + i + 32);
+			m_indices.push_back(j + i + m_divisions);
 			m_indices.push_back(j + i + 1);
-			m_indices.push_back(j + i + 33);
-			m_indices.push_back(j + i + 32);
+			m_indices.push_back(j + i + m_divisions + 1);
+			m_indices.push_back(j + i + m_divisions);
 		}
 	}
-	for (int j = 0; j < 32 * 31; j += 32)
+	int pointsInd = m_divisions * m_divisions;
+	for (int j = 0; j < m_divisions * (m_divisions - 1); j += m_divisions)
 	{
-		for (int i = 1024; i < 1024 + 31; ++i)
+		for (int i = pointsInd; i < pointsInd + (m_divisions - 1); ++i)
 		{
 			m_indices.push_back(j + i);
-			m_indices.push_back(j + i + 32);
+			m_indices.push_back(j + i + m_divisions);
 			m_indices.push_back(j + i + 1);
 			m_indices.push_back(j + i + 1);
-			m_indices.push_back(j + i + 32);
-			m_indices.push_back(j + i + 33);
+			m_indices.push_back(j + i + m_divisions);
+			m_indices.push_back(j + i + m_divisions + 1);
 		}
 	}
 
-	for (int j = 0; j < 32 * 31; j += 32)
+	pointsInd += m_divisions * m_divisions;
+	for (int j = 0; j < m_divisions * (m_divisions - 1); j += m_divisions)
 	{
-		for (int i = 2048; i < 2048 + 31; ++i)
+		for (int i = pointsInd; i < pointsInd + (m_divisions - 1); ++i)
 		{
 			m_indices.push_back(j + i);
-			m_indices.push_back(j + i + 32);
+			m_indices.push_back(j + i + m_divisions);
 			m_indices.push_back(j + i + 1);
 			m_indices.push_back(j + i + 1);
-			m_indices.push_back(j + i + 32);
-			m_indices.push_back(j + i + 33);
-		}
-	}
-	for (int j = 0; j < 32 * 31; j += 32)
-	{
-		for (int i = 3072; i < 3072 + 31; ++i)
-		{
-			m_indices.push_back(j + i);
-			m_indices.push_back(j + i + 1);
-			m_indices.push_back(j + i + 32);
-			m_indices.push_back(j + i + 1);
-			m_indices.push_back(j + i + 33);
-			m_indices.push_back(j + i + 32);
+			m_indices.push_back(j + i + m_divisions);
+			m_indices.push_back(j + i + m_divisions + 1);
 		}
 	}
 
-	for (int j = 0; j < 32 * 31; j += 32)
+	pointsInd += m_divisions * m_divisions;
+	for (int j = 0; j < m_divisions * (m_divisions - 1); j += m_divisions)
 	{
-		for (int i = 4096; i < 4096 + 31; ++i)
+		for (int i = pointsInd; i < pointsInd + (m_divisions - 1); ++i)
 		{
 			m_indices.push_back(j + i);
-			m_indices.push_back(j + i + 32);
 			m_indices.push_back(j + i + 1);
+			m_indices.push_back(j + i + m_divisions);
 			m_indices.push_back(j + i + 1);
-			m_indices.push_back(j + i + 32);
-			m_indices.push_back(j + i + 33);
+			m_indices.push_back(j + i + m_divisions + 1);
+			m_indices.push_back(j + i + m_divisions);
 		}
 	}
-	for (int j = 0; j < 32 * 31; j += 32)
+
+	pointsInd += m_divisions * m_divisions;
+	for (int j = 0; j < m_divisions * (m_divisions - 1); j += m_divisions)
 	{
-		for (int i = 5120; i < 5120 + 31; ++i)
+		for (int i = pointsInd; i < pointsInd + (m_divisions - 1); ++i)
+		{
+			m_indices.push_back(j + i);
+			m_indices.push_back(j + i + m_divisions);
+			m_indices.push_back(j + i + 1);
+			m_indices.push_back(j + i + 1);
+			m_indices.push_back(j + i + m_divisions);
+			m_indices.push_back(j + i + m_divisions + 1);
+		}
+	}
+
+	pointsInd += m_divisions * m_divisions;
+	for (int j = 0; j < m_divisions * (m_divisions - 1); j += m_divisions)
+	{
+		for (int i = pointsInd; i < pointsInd + (m_divisions - 1); ++i)
 		{
 			m_indices.push_back(j + i);
 			m_indices.push_back(j + i + 1);
-			m_indices.push_back(j + i + 32);
+			m_indices.push_back(j + i + m_divisions);
 			m_indices.push_back(j + i + 1);
-			m_indices.push_back(j + i + 33);
-			m_indices.push_back(j + i + 32);
+			m_indices.push_back(j + i + m_divisions + 1);
+			m_indices.push_back(j + i + m_divisions);
 		}
 	}
 }

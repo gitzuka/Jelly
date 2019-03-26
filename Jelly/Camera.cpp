@@ -219,7 +219,6 @@ QMatrix4x4 Camera::createIdentity()
 QVector4D Camera::multiplyByMatrix(const QMatrix4x4 &mat, const QVector4D &vec)
 {
 	QVector4D vector;
-	//float x = mat.row(0).w();
 	vector.setX(vec.x()*mat.row(0).x() + vec.y()*mat.row(0).y() + vec.z()*mat.row(0).z() + vec.w()*mat.row(0).w());
 	vector.setY(vec.x()*mat.row(1).x() + vec.y()*mat.row(1).y() + vec.z()*mat.row(1).z() + vec.w()*mat.row(1).w());
 	vector.setZ(vec.x()*mat.row(2).x() + vec.y()*mat.row(2).y() + vec.z()*mat.row(2).z() + vec.w()*mat.row(2).w());
@@ -229,28 +228,12 @@ QVector4D Camera::multiplyByMatrix(const QMatrix4x4 &mat, const QVector4D &vec)
 
 QVector3D Camera::convertToScreenSpace(float mouseX, float mouseY, float mouseZ, float width, float heigth, const QMatrix4x4& view, float pitch, float yaw)
 {
-	//float cursorPosX = mouseX / (width * 0.5f) - 1.0f;
-	//float cursorPosY = -mouseY / (heigth * 0.5f) + 1.0f;
 	float cursorPosX = mouseX / (width * 0.5f) - 1.0f;
 	float cursorPosY = -mouseY / (heigth * 0.5f) + 1.0f;
 
 	return QVector3D(cursorPosX - view.row(0).w(),
 		cursorPosY - view.row(1).w(),
 		mouseZ - view.row(2).w() - 1);
-
-	/*m_cursorPosX = x / (width * 0.5f) - 1.0f;
-	m_cursorPosY = -y / (heigth * 0.5f) + 1.0f;
-
-	m_cursor->m_worldCoords = QVector3D(m_cursorPosX - m_camera.m_viewMatrix.row(0).w(),
-		m_cursorPosY - m_camera.m_viewMatrix.row(1).w(),
-		m_cursorPosZ - m_camera.m_viewMatrix.row(2).w() - 1);
-	m_cursor->setModelMatrix((Camera::createRotationX(m_camera.m_pitch) * Camera::createRotationY(m_camera.m_yaw)).inverted()
-		* Camera::createTranslation(m_cursor->m_worldCoords));
-
-	if (m_cursor->m_obtainedObject != nullptr)
-	{
-		m_cursor->m_obtainedObject->setModelMatrix(m_cursor->getModelMatrix());
-	}*/
 }
 
 float Camera::convertToRadians(float angle)

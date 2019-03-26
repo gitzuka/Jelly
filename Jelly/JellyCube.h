@@ -19,5 +19,4 @@ public:
 private:
 	float m_edgeLength;
 	QVector3D m_color;
-	//std::vector<Spring> m_springs;
 };

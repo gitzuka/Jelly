@@ -22,7 +22,6 @@ private:
 	int m_cuboidIndex;
 	int m_modelIndex;
 	bool m_drawPoints;
-	//QMatrix4x4 m_local;
 
 	void loadModel();
 
@@ -43,5 +42,4 @@ private slots:
 	void setCuboidDrawState(int draw);
 	void setModelDrawState(int draw);
 	void rotateFrame(float pitch, float yaw);
-	//void setDrawState(bool draw, )
 };

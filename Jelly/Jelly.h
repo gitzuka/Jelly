@@ -19,14 +19,15 @@ public:
 	const std::vector<JellyPoint>& getJellyPoints() const;
 	void startSimulation();
 	QVector<QVector3D> getJellyPointsPositions() const;
-	void setBoundingX(const QVector2D boundingX);
-	void setBoundingY(const QVector2D boundingY);
-	void setBoundingZ(const QVector2D boundingZ);
+	void setBoundingX(const QVector2D &boundingX);
+	void setBoundingY(const QVector2D &boundingY);
+	void setBoundingZ(const QVector2D &boundingZ);
 
 private:
 	Physics m_physics;
 	std::vector<Spring> m_springs;
-	std::vector<Spring> m_frameSprings; //first point is frame point, position isnt affected by physics
+	//first point is frame point, position isnt affected by physics
+	std::vector<Spring> m_frameSprings; 
 	std::vector<JellyPoint> m_framePoints;
 	std::vector<JellyPoint> m_jellyPoints;
 	float m_velocitiesRange;
@@ -36,11 +37,7 @@ private:
 	QTimer *m_timerPhysics;
 	QTimer *m_timerDraw;
 	bool m_simulate;
-
 	void resetForces();
-//
-//signals:
-//	void simulationUpdated(int jellyIndex);
 
 private slots:
 	void setk(double k);

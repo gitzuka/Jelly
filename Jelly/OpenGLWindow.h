@@ -15,7 +15,6 @@ public:
 	~OpenGLWindow();
 
 	void setRenderer(Renderer *renderer);
-	//Physics m_physicComponent;
 
 protected:
 	void initializeGL();
