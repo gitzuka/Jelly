@@ -42,3 +42,13 @@ int Mesh::getIndex() const
 {
 	return m_index;
 }
+
+void Mesh::setNormals(const QVector<QVector3D>& normals)
+{
+	if (normals.size() != m_vertices.size())
+		return;
+	for (int i = 0; i < normals.size(); ++i)
+	{
+		m_vertices[i].setNormal(normals[i]);
+	}
+}

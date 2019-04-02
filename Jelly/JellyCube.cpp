@@ -4,7 +4,6 @@ JellyCube::JellyCube(GLenum drawMode, int index, QVector3D color = QVector3D(0, 
 	: Mesh(drawMode, index), m_edgeLength(edgeLength), m_color(color)
 {
 	JellyCube::generateVertices();
-	//generateSprings();
 }
 
 JellyCube::~JellyCube()
@@ -112,19 +111,13 @@ void JellyCube::generateSprings(std::vector<Spring> &springs, std::vector<JellyP
 	}
 }
 
-void JellyCube::generateFrameSprings(std::vector<Spring> &springs, std::vector<JellyPoint> &jellyPoints)
-{
-	springs.reserve(8);
-	jellyPoints.reserve(8);
-}
-
 void JellyCube::generateJellyPoints(std::vector<JellyPoint>& jellyPoints)
 {
 	jellyPoints.clear();
 	jellyPoints.reserve(m_vertices.count());
 	for (QVector<Vertex>::const_iterator it = m_vertices.begin(); it != m_vertices.end(); ++it)
 	{
-		jellyPoints.push_back(JellyPoint((*it).getPosition(), 1.0f, QVector3D(0, 0, 0)));
+		jellyPoints.emplace_back((*it).getPosition(), 1.0f, QVector3D(0, 0, 0));
 	}
 }
 

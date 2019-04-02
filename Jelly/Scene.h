@@ -14,13 +14,16 @@ public:
 
 private:
 	Renderer m_renderer;
-	Jelly m_jelly;
+	Jelly m_jelly, m_jellyNormals;
 	int m_jellyIndex;
 	int m_frameIndex;
 	int m_cursorIndex;
 	int m_bezierIndex;
 	int m_cuboidIndex;
 	int m_modelIndex;
+	int m_modelIndexNormals;
+	int m_startPoinsIndex;
+	QMatrix4x4 m_rotationMat;
 	bool m_drawPoints;
 
 	void loadModel();

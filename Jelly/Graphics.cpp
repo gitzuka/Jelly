@@ -1,6 +1,7 @@
 #include "Graphics.h"
 #include "JellyPoint.h"
 #include "JellyCube.h"
+#include "BezierCube.h"
 
 Graphics::Graphics(QOpenGLShaderProgram* program) : m_program(program)
 {
@@ -106,6 +107,7 @@ void Graphics::initBuffer(int bufferIndex, QOpenGLBuffer::UsagePattern bufferUsa
 		m_program->enableAttributeArray(0);
 		m_program->enableAttributeArray(1);
 		m_program->enableAttributeArray(2);
+		//m_program->enableAttributeArray(3);
 
 		m_vao.release();
 		m_ibos.at(bufferIndex).release();
@@ -137,7 +139,7 @@ void Graphics::updateVertexBufferData(int offset, const QVector<Vertex> &vertice
 	m_vbos.at(bufferIndex).bind();
 }
 
-void Graphics::addMesh(const std::shared_ptr<Mesh> mesh, QOpenGLBuffer::UsagePattern bufferUsage)
+void Graphics::addMesh(std::shared_ptr<Mesh> mesh, QOpenGLBuffer::UsagePattern bufferUsage)
 {
 	m_meshes.append(mesh);
 	m_drawState.push_back(true);
@@ -165,17 +167,20 @@ void Graphics::draw(const QMatrix4x4 &projView)
 			++i;
 			continue;
 		}
-		//m_program->setUniformValue(m_program->uniformLocation("model"), projView * (*it)->getModelMatrix());
+		auto bezier = std::static_pointer_cast<BezierCube>(*it);
+		if (bezier)
+		{
+			m_program->setUniformValue(m_program->uniformLocation("isModel"), bezier->isModel());
+		}
 		m_program->setUniformValue(m_program->uniformLocation("model"), (*it)->getModelMatrix());
 		m_program->setUniformValue(m_program->uniformLocation("MVP"), projView * (*it)->getModelMatrix());
-		//m_program->setUniformValue(m_program->uniformLocation("MVP"), projView * (*it)->getModelMatrix());
 		m_vao.bind();
 		m_vbos.at(i).bind();
 		m_ibos.at(i).bind();
 
-		m_program->setAttributeBuffer(0, GL_FLOAT, Vertex::getPositionOffset(), Vertex::PositionTupleSize, Vertex::getStride());
-		m_program->setAttributeBuffer(1, GL_FLOAT, Vertex::getNormalOffset(), Vertex::NormalTupleSize, Vertex::getStride());
-		m_program->setAttributeBuffer(2, GL_FLOAT, Vertex::getColorOffset(), Vertex::ColorTupleSize, Vertex::getStride());
+		m_program->setAttributeBuffer(0, GL_FLOAT, Vertex::getPositionOffset(), Vertex::PositionColorNormalTupleSize, Vertex::getStride());
+		m_program->setAttributeBuffer(1, GL_FLOAT, Vertex::getColorOffset(), Vertex::PositionColorNormalTupleSize, Vertex::getStride());
+		m_program->setAttributeBuffer(2, GL_FLOAT, Vertex::getNormalOffset(), Vertex::PositionColorNormalTupleSize, Vertex::getStride());
 		glDrawElements((*it)->getDrawMode(), (*it)->getIndices().size(), GL_UNSIGNED_SHORT, nullptr);
 		m_ibos.at(i).release();
 		m_vbos.at(i).release();

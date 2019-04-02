@@ -4,7 +4,7 @@
 #define CAM_NEAR 0.01f
 #define CAM_FAR 50.0f
 #define FOV 60.0f
-#define SPEED 0.12f
+#define SPEED 0.25f
 #define MOUSE_SENSITIVITY 0.005f
 #define TRANSLATION_STEP 0.4f
 
@@ -22,7 +22,7 @@ public:
 	QMatrix4x4 m_projView;
 
 	void updateView();
-	void keyPressed(const unsigned char key);
+	void keyPressed(unsigned char key);
 	void mouseMoved(float x, float y);
 
 	static QMatrix4x4 createLookAt(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);

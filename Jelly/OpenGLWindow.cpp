@@ -1,6 +1,5 @@
 #include "OpenGLWindow.h"
 #include <QtGui>
-#include "Cursor3D.h"
 
 OpenGLWindow::OpenGLWindow(QWidget* parent) : m_renderer(nullptr), m_dx(0), m_dy(0)
 {

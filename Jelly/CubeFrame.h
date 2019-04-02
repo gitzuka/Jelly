@@ -15,6 +15,7 @@ public:
 	void getVerticesPositions(std::vector<QVector3D> &positions) const;
 	void setPitch(float pitch);
 	void setYaw(float yaw);
+	QMatrix4x4 getRotationmat() const;
 	void moveFrame(const QMatrix4x4 &mat, const Camera &cam);
 	void rotate(float pitch, float yaw, const Camera &cam);
 

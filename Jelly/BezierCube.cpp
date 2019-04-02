@@ -1,17 +1,17 @@
 #include "BezierCube.h"
 
-BezierCube::BezierCube(GLenum drawMode, int index, int divisions = 32, QVector3D color = QVector3D(0, 0, 1))
-	: Mesh(drawMode, index), m_divisions(divisions), m_color(color)
+BezierCube::BezierCube(GLenum drawMode, int index, int divisions = 32, QVector3D color = QVector3D(0, 0, 1), bool model = false)
+	: Mesh(drawMode, index), m_divisions(divisions), m_color(color), m_model(model)
 {
 	BezierCube::generateVertices();
 	BezierCube::generateIndices();
-	fillPositions();
+	//fillPositions();
 }
 
-BezierCube::BezierCube(const QVector<Vertex>& vertices, const QVector<GLushort>& indices, GLenum drawMode, int index, QVector3D color)
-	: Mesh(vertices, indices, drawMode, index), m_divisions(0), m_color(color)
+BezierCube::BezierCube(const QVector<Vertex>& vertices, const QVector<GLushort>& indices, GLenum drawMode, int index, QVector3D color, bool model)
+	: Mesh(vertices, indices, drawMode, index), m_divisions(0), m_color(color), m_model(model)
 {
-	fillPositions();
+	//fillPositions();
 }
 
 BezierCube::~BezierCube()
@@ -38,14 +38,15 @@ void BezierCube::generateVertices()
 			for (int x = 0; x < m_divisions; ++x)
 			{
 				float ax = distance * x;
-				m_vertices.push_back(Vertex(QVector3D(ax, ay, az), m_color, QVector3D(0,0,norm)));
+				//m_vertices.push_back(Vertex(QVector3D(ax, ay, az), m_color, QVector3D(0,0,norm)));
+				m_vertices.push_back(Vertex(QVector3D(az, ay, ax), m_color, QVector3D(0, 0, norm)));
 			}
 		}
 	}
 	for (int y = 0; y <= m_divisions; y += m_divisions - 1)
 	{
 		float ay = distance * y;
-		float norm; 
+		float norm;
 		if (ay < 0.1f)
 			norm = -1;
 		else
@@ -56,7 +57,8 @@ void BezierCube::generateVertices()
 			for (int x = 0; x < m_divisions; ++x)
 			{
 				float ax = distance * x;
-				m_vertices.push_back(Vertex(QVector3D(ax, ay, az), m_color, QVector3D(0, norm, 0)));
+				//m_vertices.push_back(Vertex(QVector3D(ax, ay, az), m_color, QVector3D(0, norm, 0)));
+				m_vertices.push_back(Vertex(QVector3D(az, ay, ax), m_color, QVector3D(0, norm, 0)));
 			}
 		}
 	}
@@ -74,7 +76,8 @@ void BezierCube::generateVertices()
 			for (int z = 0; z < m_divisions; ++z)
 			{
 				float az = distance * z;
-				m_vertices.push_back(Vertex(QVector3D(ax, ay, az), m_color, QVector3D(norm, 0, 0)));
+				//m_vertices.push_back(Vertex(QVector3D(ax, ay, az), m_color, QVector3D(norm, 0, 0)));
+				m_vertices.push_back(Vertex(QVector3D(az, ay, ax), m_color, QVector3D(norm, 0, 0)));
 			}
 		}
 	}
@@ -82,7 +85,7 @@ void BezierCube::generateVertices()
 
 void BezierCube::generateIndices()
 {
-	for (int j = 0; j < m_divisions * (m_divisions - 1); j+=m_divisions)
+	for (int j = 0; j < m_divisions * (m_divisions - 1); j += m_divisions)
 	{
 		for (int i = 0; i < (m_divisions - 1); ++i)
 		{
@@ -165,16 +168,21 @@ void BezierCube::generateIndices()
 	}
 }
 
-const QVector<QVector3D>& BezierCube::getPositions() const
+bool BezierCube::isModel() const
 {
-	return m_positions;
+	return m_model;
 }
 
-void BezierCube::fillPositions()
-{
-	m_positions.reserve(m_vertices.count());
-	for (QVector<Vertex>::const_iterator it = m_vertices.begin(); it != m_vertices.end(); ++it)
-	{
-		m_positions.push_back(it->getPosition());
-	}
-}
+//const QVector<QVector3D>& BezierCube::getPositions() const
+//{
+//	return m_positions;
+//}
+//
+//void BezierCube::fillPositions()
+//{
+//	m_positions.reserve(m_vertices.count());
+//	for (QVector<Vertex>::const_iterator it = m_vertices.begin(); it != m_vertices.end(); ++it)
+//	{
+//		m_positions.push_back(it->getPosition());
+//	}
+//}

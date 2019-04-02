@@ -28,6 +28,11 @@ const QVector3D & Vertex::getNormal() const
 	return m_normal;
 }
 
+const QVector3D& Vertex::getPositionNormal() const
+{
+	return m_positionNormal;
+}
+
 void Vertex::setPosition(const QVector3D &position)
 {
 	m_position = position;
@@ -43,6 +48,11 @@ void Vertex::setNormal(const QVector3D &normal)
 	m_normal = normal;
 }
 
+void Vertex::setPositionNormal(const QVector3D &positionNormal)
+{
+	m_positionNormal = positionNormal;
+}
+
 int Vertex::getPositionOffset()
 {
 	return offsetof(Vertex, m_position);
@@ -56,6 +66,11 @@ int Vertex::getColorOffset()
 int Vertex::getNormalOffset()
 {
 	return offsetof(Vertex, m_normal);
+}
+
+int Vertex::getPositionNormalOffset()
+{
+	return  offsetof(Vertex, m_positionNormal);
 }
 
 int Vertex::getStride()

@@ -23,7 +23,7 @@
    <string>Jelly</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="12,5">
+   <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="18,1">
     <property name="spacing">
      <number>5</number>
     </property>
@@ -54,6 +54,9 @@
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetFixedSize</enum>
+      </property>
       <item>
        <layout class="QFormLayout" name="formLayout">
         <property name="sizeConstraint">
@@ -121,7 +124,7 @@
            <double>100.000000000000000</double>
           </property>
           <property name="value">
-           <double>0.100000000000000</double>
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -230,7 +233,7 @@
       <item>
        <widget class="QLabel" name="label_cursor">
         <property name="text">
-         <string>Cursor coordinates: </string>
+         <string>Cursor pos: </string>
         </property>
        </widget>
       </item>
@@ -267,7 +270,7 @@
       <item>
        <widget class="QCheckBox" name="checkBox_cuboid">
         <property name="text">
-         <string>Draw bounding Cuboid</string>
+         <string>Draw Bounding Box</string>
         </property>
         <property name="checked">
          <bool>true</bool>

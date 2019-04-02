@@ -20,9 +20,9 @@ public:
 	void updateVertexBufferData(int offset, const Vertex *vertex, int bufferIndex, int count);
 	void updateVertexBufferData(int offset, const Vertex *vertex, int count, QOpenGLBuffer *buffer);
 	void updateVertexBufferData(int offset, const QVector<Vertex> &vertices, int bufferIndex);
-	void addMesh(const std::shared_ptr<Mesh> mesh, QOpenGLBuffer::UsagePattern bufferUsage);
+	void addMesh(std::shared_ptr<Mesh> mesh, QOpenGLBuffer::UsagePattern bufferUsage);
 	void assignShaderProgram(QOpenGLShaderProgram *program);
-	const QVector<std::shared_ptr<Mesh>>& Graphics::getMeshes() const;
+	const QVector<std::shared_ptr<Mesh>>& getMeshes() const;
 	void draw(const QMatrix4x4 &projView);
 	void setDrawState(bool draw, int index);
 	QOpenGLShaderProgram* getProgram();

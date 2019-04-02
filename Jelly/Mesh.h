@@ -20,6 +20,7 @@ public:
 	const QMatrix4x4& getModelMatrix() const;
 	void setModelMatrix(const QMatrix4x4 &mat);
 	int getIndex() const;
+	void setNormals(const QVector<QVector3D> &normals);
 
 protected:
 	QVector<Vertex> m_vertices;

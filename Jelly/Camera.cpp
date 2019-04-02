@@ -17,7 +17,7 @@ void Camera::updateView()
 	m_projView = m_projectionMatrix * m_viewMatrix;
 }
 
-void Camera::keyPressed(const unsigned char key)
+void Camera::keyPressed(unsigned char key)
 {
 	float dx = 0, dz = 0, dy = 0;
 	switch (key)
@@ -195,6 +195,7 @@ QMatrix4x4 Camera::createRotationY(float angle)
 
 QMatrix4x4 Camera::createRotationZ(float angle)
 {
+	angle = convertToRadians(angle);
 	float sinus = sin(angle);
 	float cosinus = cos(angle);
 	QMatrix4x4 rotationZ = {

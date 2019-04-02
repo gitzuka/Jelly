@@ -23,9 +23,9 @@ public:
 	void setMass(double mass);
 	void setElasticityC1(double elasticity);
 	void setElasticityC2(double elasticity);
-	void setBoundingX(const QVector2D boundingX);
-	void setBoundingY(const QVector2D boundingY);
-	void setBoundingZ(const QVector2D boundingZ);
+	void setBoundingX(const QVector2D &boundingX);
+	void setBoundingY(const QVector2D &boundingY);
+	void setBoundingZ(const QVector2D &boundingZ);
 	void setBounceFactor(double bounceFactor);
 
 private:

@@ -1,7 +1,5 @@
 #include "MainWindow.h"
 
-//TODO: poprawienie cieni, restrukturezacja kodu, wczytywanie plikow, kursor 3d, odbicia
-
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -72,7 +70,7 @@ void MainWindow::initializeProgram()
 void MainWindow::updateCursorLabel(const QVector3D& pos) const
 {
 	ui.label_cursor->setText(m_cursorLabelText +
-		QString::number(pos.x(),'f', 3) + " " + QString::number(pos.y(), 'f', 3) + " " + QString::number(pos.z(), 'f', 3));
+		QString::number(pos.x(),'f', 2) + " " + QString::number(pos.y(), 'f', 2) + " " + QString::number(pos.z(), 'f', 2));
 }
 
 void MainWindow::toggleCursorCheckobx() const
